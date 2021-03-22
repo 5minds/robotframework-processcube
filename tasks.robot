@@ -2,7 +2,9 @@
 Documentation   Template robot main suite.
 Resource        keywords.robot
 Library         Library.py
-Library         AtlasEngineClient.py    http://localhost:56200
+Library         AtlasEngineClient.py    http://localhost:56100
+Library    Process
+Library    Collections
 Variables       variables.py
 
 
@@ -12,6 +14,12 @@ Example task
     Example Python Keyword
 
 *** Tasks ***
-Example task engine
+Get engine info task
     ${INFO}    Get Engine Info
     Log    ${INFO}
+
+*** Tasks ***
+Start process
+    ${RESULT}    Start Processmodel     hello_world
+    Log    ${RESULT}
+
