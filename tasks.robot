@@ -2,7 +2,7 @@
 Documentation   Template robot main suite.
 Resource        keywords.robot
 Library         Library.py
-Library         AtlasEngineClient.py
+Library         AtlasEngineClient.py    http://localhost:56200
 Variables       variables.py
 
 

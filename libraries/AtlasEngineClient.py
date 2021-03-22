@@ -14,11 +14,12 @@ def sync_wait(self, future):
 
 class AtlasEngineClient:
 
-    def get_engine_info(self):
-        engine_url = "http://localhost:56200"
+    def __init__(self, engine_url):
+        self._engine_url = engine_url
 
+    def get_engine_info(self):
         factroy = ClientFactory()
-        client = factroy.create_app_info_client(engine_url)
+        client = factroy.create_app_info_client(self._engine_url)
 
         result = client.get_info()
 
