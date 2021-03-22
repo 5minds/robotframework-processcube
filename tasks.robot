@@ -19,7 +19,7 @@ Get engine info task
     Log    ${INFO}
 
 *** Tasks ***
-Start process
-    ${RESULT}    Start Processmodel     hello_world
+Start process with payload
+    &{PAYLOAD} =    Create Dictionary    foo    bar    hello    world
+    ${RESULT}    Start Processmodel     hello_world    ${PAYLOAD}
     Log    ${RESULT}
-

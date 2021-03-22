@@ -25,10 +25,10 @@ class AtlasEngineClient:
 
         return result
 
-    def start_processmodel(self, process_model):
+    def start_processmodel(self, process_model, payload={}):
         factroy = ClientFactory()
         client = factroy.create_process_definition_client(self._engine_url)
 
-        result = client.start_process_instance_and_await_end_event(process_model)
+        result = client.start_process_instance_and_await_end_event(process_model, inital_token=payload)
 
         return result
