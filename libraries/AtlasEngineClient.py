@@ -1,5 +1,6 @@
 import asyncio
 from atlas_engine_client import ClientFactory
+from atlas_engine_client.core.api import Client
 
 from robot.api import logger
 
@@ -16,6 +17,10 @@ class AtlasEngineClient:
 
     def __init__(self, engine_url):
         self._engine_url = engine_url
+
+    def deploy_pathname(self, pathname):
+        client = Client(self._engine_url)
+        client.process_defintion_deploy_by_pathname(pathname)
 
     def get_engine_info(self):
         factroy = ClientFactory()
