@@ -19,6 +19,4 @@ artifactsDir: output
 PATH:
   - .
 PYTHONPATH:
-  - keywords
   - libraries
-  - variables
