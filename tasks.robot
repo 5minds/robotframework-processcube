@@ -8,9 +8,11 @@ Get engine info task
     ${INFO}    Get Engine Info
     Log    ${INFO}
 
+
 *** Tasks ***
 Deploy a process model
     Deploy Pathname    hello_robot_framework.bpmn
+
 
 *** Tasks ***
 Start process with payload
@@ -18,4 +20,3 @@ Start process with payload
     ${RESULT}    Start Processmodel     hello_robot_framework    ${PAYLOAD}
     Log    ${RESULT["tokenPayload"]}
     Should Be True    '${RESULT["tokenPayload"]["hello"]}'=='world'
-
