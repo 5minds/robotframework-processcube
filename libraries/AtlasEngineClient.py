@@ -18,7 +18,7 @@ def sync_wait(self, future):
 class AtlasEngineClient:
 
     def __init__(self, engine_url):
-        self._client = Client(self._engine_url)
+        self._client = Client(engine_url)
 
     def deploy_pathname(self, pathname):
         self._client.process_defintion_deploy_by_pathname(pathname)
