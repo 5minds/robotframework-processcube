@@ -1,6 +1,8 @@
 import asyncio
 from atlas_engine_client import ClientFactory
 from atlas_engine_client.core.api import Client
+from atlas_engine_client.core.api.helpers.process_definitions import StartCallbackType
+from atlas_engine_client.core.api.helpers.process_models import ProcessStartRequest
 
 from robot.api import logger
 
@@ -16,24 +18,23 @@ def sync_wait(self, future):
 class AtlasEngineClient:
 
     def __init__(self, engine_url):
-        self._engine_url = engine_url
+        self._client = Client(self._engine_url)
 
     def deploy_pathname(self, pathname):
-        client = Client(self._engine_url)
-        client.process_defintion_deploy_by_pathname(pathname)
+        self._client.process_defintion_deploy_by_pathname(pathname)
 
     def get_engine_info(self):
-        factroy = ClientFactory()
-        client = factroy.create_app_info_client(self._engine_url)
+        result = self._client.info()
 
-        result = client.get_info()
-
-        return result
+        return result.__dict__ # Issue
 
     def start_processmodel(self, process_model, payload={}):
-        factroy = ClientFactory()
-        client = factroy.create_process_definition_client(self._engine_url)
 
-        result = client.start_process_instance_and_await_end_event(process_model, inital_token=payload)
+        request = ProcessStartRequest(
+            process_model_id=process_model, 
+            initial_token=payload, 
+            return_on=StartCallbackType.CallbackOnProcessInstanceFinished)
 
-        return result
+        result = self._client.process_model_start(process_model, request)
+
+        return result.to_dict()
