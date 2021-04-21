@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.8.5 on darwin)" generated="20210421 22:42:53.086" rpa="true">
+<robot generator="Robot 3.2.2 (Python 3.8.5 on darwin)" generated="20210421 22:45:21.182" rpa="true">
 <suite id="s1" name="Tasks" source="/Users/mollenbeck/projects/moellenbeck/reps/my-first-extend-robot/tasks.robot">
 <test id="s1-t1" name="Get engine info task">
 <kw name="Get Engine Info" library="AtlasEngineClient">
 <assign>
 <var>${INFO}</var>
 </assign>
-<msg timestamp="20210421 22:42:53.303" level="INFO">${INFO} = {'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info':...</msg>
-<status status="PASS" starttime="20210421 22:42:53.293" endtime="20210421 22:42:53.303"></status>
+<msg timestamp="20210421 22:45:21.391" level="INFO">${INFO} = {'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info':...</msg>
+<status status="PASS" starttime="20210421 22:45:21.381" endtime="20210421 22:45:21.391"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${INFO}</arg>
 </arguments>
-<msg timestamp="20210421 22:42:53.303" level="INFO">{'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info': {'portalUrl': 'http://localhost:56110/', 'startedBy': '5Minds Studio (Beta)'}}</msg>
-<status status="PASS" starttime="20210421 22:42:53.303" endtime="20210421 22:42:53.304"></status>
+<msg timestamp="20210421 22:45:21.392" level="INFO">{'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info': {'portalUrl': 'http://localhost:56110/', 'startedBy': '5Minds Studio (Beta)'}}</msg>
+<status status="PASS" starttime="20210421 22:45:21.391" endtime="20210421 22:45:21.392"></status>
 </kw>
-<status status="PASS" starttime="20210421 22:42:53.292" endtime="20210421 22:42:53.304" critical="yes"></status>
+<status status="PASS" starttime="20210421 22:45:21.380" endtime="20210421 22:45:21.392" critical="yes"></status>
 </test>
 <test id="s1-t2" name="Deploy a process">
 <kw name="Deploy Process" library="AtlasEngineClient">
 <arguments>
 <arg>hello_robot_framework.bpmn</arg>
 </arguments>
-<status status="PASS" starttime="20210421 22:42:53.304" endtime="20210421 22:42:53.325"></status>
+<status status="PASS" starttime="20210421 22:45:21.393" endtime="20210421 22:45:21.414"></status>
 </kw>
-<status status="PASS" starttime="20210421 22:42:53.304" endtime="20210421 22:42:53.325" critical="yes"></status>
+<status status="PASS" starttime="20210421 22:45:21.392" endtime="20210421 22:45:21.415" critical="yes"></status>
 </test>
 <test id="s1-t3" name="Start process with payload">
 <kw name="Create Dictionary" library="BuiltIn">
@@ -38,8 +38,8 @@
 <assign>
 <var>&amp;{PAYLOAD}</var>
 </assign>
-<msg timestamp="20210421 22:42:53.327" level="INFO">&amp;{PAYLOAD} = { foo=bar | hello=world }</msg>
-<status status="PASS" starttime="20210421 22:42:53.326" endtime="20210421 22:42:53.327"></status>
+<msg timestamp="20210421 22:45:21.417" level="INFO">&amp;{PAYLOAD} = { foo=bar | hello=world }</msg>
+<status status="PASS" starttime="20210421 22:45:21.416" endtime="20210421 22:45:21.417"></status>
 </kw>
 <kw name="Start Process" library="AtlasEngineClient">
 <arguments>
@@ -49,8 +49,8 @@
 <assign>
 <var>${PROCESS}</var>
 </assign>
-<msg timestamp="20210421 22:42:53.377" level="INFO">${PROCESS} = ProcessStartResponse(process_instance_id='332ede2e-cd57-423f-98fe-774dbba50753', correlation_id='8d172b64-91b5-4302-998b-8c02c74770e3', end_event_id='StartEvent_1', token_payload={'foo': 'bar', 'hello...</msg>
-<status status="PASS" starttime="20210421 22:42:53.327" endtime="20210421 22:42:53.377"></status>
+<msg timestamp="20210421 22:45:21.474" level="INFO">${PROCESS} = ProcessStartResponse(process_instance_id='64f13ad8-197a-4a2c-b95e-939901009065', correlation_id='3ae179fc-6776-402d-93fd-5635fb4ae50b', end_event_id='StartEvent_1', token_payload={'foo': 'bar', 'hello...</msg>
+<status status="PASS" starttime="20210421 22:45:21.417" endtime="20210421 22:45:21.474"></status>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <doc>Returns the given values which can then be assigned to a variables.</doc>
@@ -60,17 +60,17 @@
 <assign>
 <var>${CORRELATION}</var>
 </assign>
-<msg timestamp="20210421 22:42:53.378" level="INFO">${CORRELATION} = 8d172b64-91b5-4302-998b-8c02c74770e3</msg>
-<status status="PASS" starttime="20210421 22:42:53.378" endtime="20210421 22:42:53.378"></status>
+<msg timestamp="20210421 22:45:21.475" level="INFO">${CORRELATION} = 3ae179fc-6776-402d-93fd-5635fb4ae50b</msg>
+<status status="PASS" starttime="20210421 22:45:21.474" endtime="20210421 22:45:21.475"></status>
 </kw>
 <kw name="Should Be True" library="BuiltIn">
 <doc>Fails if the given condition is not true.</doc>
 <arguments>
 <arg>'${PROCESS.token_payload["hello"]}' == 'world'</arg>
 </arguments>
-<status status="PASS" starttime="20210421 22:42:53.379" endtime="20210421 22:42:53.379"></status>
+<status status="PASS" starttime="20210421 22:45:21.475" endtime="20210421 22:45:21.476"></status>
 </kw>
-<status status="PASS" starttime="20210421 22:42:53.326" endtime="20210421 22:42:53.379" critical="yes"></status>
+<status status="PASS" starttime="20210421 22:45:21.415" endtime="20210421 22:45:21.476" critical="yes"></status>
 </test>
 <test id="s1-t4" name="Get User Task by Correlation">
 <kw name="Log" library="BuiltIn">
@@ -78,8 +78,8 @@
 <arguments>
 <arg>${CORRELATION}</arg>
 </arguments>
-<msg timestamp="20210421 22:42:53.380" level="INFO">-1</msg>
-<status status="PASS" starttime="20210421 22:42:53.380" endtime="20210421 22:42:53.380"></status>
+<msg timestamp="20210421 22:45:21.477" level="INFO">-1</msg>
+<status status="PASS" starttime="20210421 22:45:21.477" endtime="20210421 22:45:21.477"></status>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <doc>Returns the given values which can then be assigned to a variables.</doc>
@@ -90,18 +90,18 @@
 <assign>
 <var>${USER_TASK}</var>
 </assign>
-<msg timestamp="20210421 22:42:53.381" level="INFO">${USER_TASK} = ['Get User Task By Correlation', '-1']</msg>
-<status status="PASS" starttime="20210421 22:42:53.380" endtime="20210421 22:42:53.381"></status>
+<msg timestamp="20210421 22:45:21.478" level="INFO">${USER_TASK} = ['Get User Task By Correlation', '-1']</msg>
+<status status="PASS" starttime="20210421 22:45:21.478" endtime="20210421 22:45:21.478"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${USER_TASK}</arg>
 </arguments>
-<msg timestamp="20210421 22:42:53.381" level="INFO">['Get User Task By Correlation', '-1']</msg>
-<status status="PASS" starttime="20210421 22:42:53.381" endtime="20210421 22:42:53.381"></status>
+<msg timestamp="20210421 22:45:21.478" level="INFO">['Get User Task By Correlation', '-1']</msg>
+<status status="PASS" starttime="20210421 22:45:21.478" endtime="20210421 22:45:21.479"></status>
 </kw>
-<status status="PASS" starttime="20210421 22:42:53.380" endtime="20210421 22:42:53.382" critical="yes"></status>
+<status status="PASS" starttime="20210421 22:45:21.476" endtime="20210421 22:45:21.479" critical="yes"></status>
 </test>
 <test id="s1-t5" name="Get User Task">
 <kw name="Log" library="BuiltIn">
@@ -109,8 +109,8 @@
 <arguments>
 <arg>${CORRELATION}</arg>
 </arguments>
-<msg timestamp="20210421 22:42:53.382" level="INFO">-1</msg>
-<status status="PASS" starttime="20210421 22:42:53.382" endtime="20210421 22:42:53.383"></status>
+<msg timestamp="20210421 22:45:21.480" level="INFO">-1</msg>
+<status status="PASS" starttime="20210421 22:45:21.479" endtime="20210421 22:45:21.480"></status>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <doc>Returns the given values which can then be assigned to a variables.</doc>
@@ -121,21 +121,21 @@
 <assign>
 <var>${USER_TASK}</var>
 </assign>
-<msg timestamp="20210421 22:42:53.383" level="INFO">${USER_TASK} = ['Get User Task', 'correlation_id=-1']</msg>
-<status status="PASS" starttime="20210421 22:42:53.383" endtime="20210421 22:42:53.383"></status>
+<msg timestamp="20210421 22:45:21.480" level="INFO">${USER_TASK} = ['Get User Task', 'correlation_id=-1']</msg>
+<status status="PASS" starttime="20210421 22:45:21.480" endtime="20210421 22:45:21.480"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${USER_TASK}</arg>
 </arguments>
-<msg timestamp="20210421 22:42:53.383" level="INFO">['Get User Task', 'correlation_id=-1']</msg>
-<status status="PASS" starttime="20210421 22:42:53.383" endtime="20210421 22:42:53.383"></status>
+<msg timestamp="20210421 22:45:21.480" level="INFO">['Get User Task', 'correlation_id=-1']</msg>
+<status status="PASS" starttime="20210421 22:45:21.480" endtime="20210421 22:45:21.480"></status>
 </kw>
-<status status="PASS" starttime="20210421 22:42:53.382" endtime="20210421 22:42:53.383" critical="yes"></status>
+<status status="PASS" starttime="20210421 22:45:21.479" endtime="20210421 22:45:21.481" critical="yes"></status>
 </test>
 <doc>Template robot main suite.</doc>
-<status status="PASS" starttime="20210421 22:42:53.087" endtime="20210421 22:42:53.384"></status>
+<status status="PASS" starttime="20210421 22:45:21.183" endtime="20210421 22:45:21.481"></status>
 </suite>
 <statistics>
 <total>

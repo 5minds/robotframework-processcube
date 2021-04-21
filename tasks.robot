@@ -6,6 +6,7 @@ Library         Collections
 *** Variables ***
 ${CORRELATION}    -1
 ${USER_TASK}      -1
+${PAYLOAD}        -1
 
 *** Tasks ***
 Get engine info task
@@ -21,7 +22,7 @@ Deploy a process
 *** Tasks ***
 Start process with payload
     &{PAYLOAD}=           Create Dictionary        foo=bar    hello=world
-    ${PROCESS}            Start Process            hello_robot_framework    ${PAYLOAD}
+    ${PROCESS}=           Start Process            hello_robot_framework    ${PAYLOAD}
     ${CORRELATION}=       Set Variable             ${PROCESS.correlation_id}
     Should Be True        '${PROCESS.token_payload["hello"]}' == 'world'
 
