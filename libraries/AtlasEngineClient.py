@@ -20,7 +20,7 @@ class AtlasEngineClient:
     def __init__(self, engine_url):
         self._client = Client(engine_url)
 
-    def deploy_pathname(self, pathname):
+    def deploy_by_pathname(self, pathname):
         self._client.process_defintion_deploy_by_pathname(pathname)
 
     def get_engine_info(self):
@@ -28,7 +28,7 @@ class AtlasEngineClient:
 
         return result.__dict__ # Issue
 
-    def start_processmodel(self, process_model, payload={}):
+    def start_process(self, process_model, payload={}):
 
         request = ProcessStartRequest(
             process_model_id=process_model, 
@@ -37,4 +37,4 @@ class AtlasEngineClient:
 
         result = self._client.process_model_start(process_model, request)
 
-        return result.to_dict()
+        return result

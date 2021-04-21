@@ -11,12 +11,12 @@ Get engine info task
 
 *** Tasks ***
 Deploy a process model
-    Deploy Pathname    hello_robot_framework.bpmn
+    Deploy By Pathname    hello_robot_framework.bpmn
 
 
 *** Tasks ***
 Start process with payload
     &{PAYLOAD} =    Create Dictionary    foo    bar    hello    world
-    ${RESULT}    Start Processmodel     hello_robot_framework    ${PAYLOAD}
-    Log    ${RESULT["tokenPayload"]}
-    Should Be True    '${RESULT["tokenPayload"]["hello"]}'=='world'
+    ${RESULT}    Start Process     hello_robot_framework    ${PAYLOAD}
+    Log    ${RESULT.token_payload}
+    Should Be True    '${RESULT.token_payload["hello"]}'=='world'

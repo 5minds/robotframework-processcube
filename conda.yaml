@@ -15,5 +15,5 @@ dependencies:
     - rpaframework==7.1.1 # https://rpaframework.org/releasenotes.html
     - aiohttp==3.5.4
     - nest-asyncio==1.5.1
-    - atlas_engine_client==2.0.0a3
+    - atlas_engine_client==2.0.0a4
     - dataclasses-json==0.5.2
