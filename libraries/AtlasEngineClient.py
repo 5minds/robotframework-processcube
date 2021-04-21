@@ -1,20 +1,6 @@
-import asyncio
-from atlas_engine_client import ClientFactory
 from atlas_engine_client.core.api import Client
-from atlas_engine_client.core.api.helpers.process_definitions import StartCallbackType
-from atlas_engine_client.core.api.helpers.process_models import ProcessStartRequest
-
-from robot.api import logger
-
-
-def sync_wait(self, future):
-    future = asyncio.tasks.ensure_future(future, loop=self)
-    while not future.done() and not future.cancelled():
-        self._run_once()
-        if self._stopping:
-            break
-    return future.result()
-
+from atlas_engine_client.core.api import StartCallbackType
+from atlas_engine_client.core.api import ProcessStartRequest
 class AtlasEngineClient:
 
     def __init__(self, engine_url):
@@ -28,8 +14,7 @@ class AtlasEngineClient:
 
         return result.__dict__ # Issue
 
-    def start_process(self, process_model, payload={}):
-
+    def start_process_and_wait(self, process_model, payload={}):
         request = ProcessStartRequest(
             process_model_id=process_model, 
             initial_token=payload, 
@@ -38,3 +23,25 @@ class AtlasEngineClient:
         result = self._client.process_model_start(process_model, request)
 
         return result
+
+    def start_process(self, process_model, payload={}):
+
+        request = ProcessStartRequest(
+            process_model_id=process_model, 
+            initial_token=payload, 
+            return_on=StartCallbackType.CallbackOnProcessInstanceCreated)
+
+        result = self._client.process_model_start(process_model, request)
+
+        return result
+
+    def get_user_task_by_correlation(self, correlation_id):
+        
+        user_tasks = self._client.user_task_get(limit=1)
+
+        if len(user_tasks) >= 1:
+            user_task = user_tasks[0]
+        else:
+            user_task = {}
+
+        return user_task

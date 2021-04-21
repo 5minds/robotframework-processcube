@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2.2 (Python 3.8.5 on darwin)" generated="20210421 21:54:01.575" rpa="true">
+<suite id="s1" name="Tasks" source="/Users/mollenbeck/projects/moellenbeck/reps/my-first-extend-robot/tasks.robot">
+<test id="s1-t1" name="Get engine info task">
+<kw name="Get Engine Info" library="AtlasEngineClient">
+<assign>
+<var>${INFO}</var>
+</assign>
+<msg timestamp="20210421 21:54:02.100" level="INFO">${INFO} = {'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info':...</msg>
+<status status="PASS" starttime="20210421 21:54:02.087" endtime="20210421 21:54:02.100"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${INFO}</arg>
+</arguments>
+<msg timestamp="20210421 21:54:02.101" level="INFO">{'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info': {'portalUrl': 'http://localhost:56110/', 'startedBy': '5Minds Studio (Beta)'}}</msg>
+<status status="PASS" starttime="20210421 21:54:02.101" endtime="20210421 21:54:02.101"></status>
+</kw>
+<status status="PASS" starttime="20210421 21:54:02.086" endtime="20210421 21:54:02.101" critical="yes"></status>
+</test>
+<test id="s1-t2" name="Deploy a process model">
+<kw name="Deploy By Pathname" library="AtlasEngineClient">
+<arguments>
+<arg>hello_robot_framework.bpmn</arg>
+</arguments>
+<status status="PASS" starttime="20210421 21:54:02.102" endtime="20210421 21:54:02.125"></status>
+</kw>
+<status status="PASS" starttime="20210421 21:54:02.102" endtime="20210421 21:54:02.126" critical="yes"></status>
+</test>
+<test id="s1-t3" name="Start process with payload">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>foo</arg>
+<arg>bar</arg>
+<arg>hello</arg>
+<arg>world</arg>
+</arguments>
+<assign>
+<var>&amp;{PAYLOAD}</var>
+</assign>
+<msg timestamp="20210421 21:54:02.127" level="INFO">&amp;{PAYLOAD} = { foo=bar | hello=world }</msg>
+<status status="PASS" starttime="20210421 21:54:02.127" endtime="20210421 21:54:02.127"></status>
+</kw>
+<kw name="Start Process" library="AtlasEngineClient">
+<arguments>
+<arg>hello_robot_framework</arg>
+<arg>${PAYLOAD}</arg>
+</arguments>
+<assign>
+<var>${PROCESS}</var>
+</assign>
+<msg timestamp="20210421 21:54:02.174" level="INFO">${PROCESS} = ProcessStartResponse(process_instance_id='dc0a00e2-ab7f-4f59-bda3-d28ea9b0dd40', correlation_id='740740a8-8fee-4f04-84ef-f77b00a72988', end_event_id='StartEvent_1', token_payload={'foo': 'bar', 'hello...</msg>
+<status status="PASS" starttime="20210421 21:54:02.128" endtime="20210421 21:54:02.174"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${PROCESS.correlation_id}</arg>
+</arguments>
+<assign>
+<var>${CORRELATION}</var>
+</assign>
+<msg timestamp="20210421 21:54:02.175" level="INFO">${CORRELATION} = 740740a8-8fee-4f04-84ef-f77b00a72988</msg>
+<status status="PASS" starttime="20210421 21:54:02.175" endtime="20210421 21:54:02.176"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>'${PROCESS.token_payload["hello"]}'=='world'</arg>
+</arguments>
+<status status="PASS" starttime="20210421 21:54:02.176" endtime="20210421 21:54:02.177"></status>
+</kw>
+<status status="PASS" starttime="20210421 21:54:02.126" endtime="20210421 21:54:02.177" critical="yes"></status>
+</test>
+<test id="s1-t4" name="Get User Task by Correlation">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${CORRELATION}</arg>
+</arguments>
+<msg timestamp="20210421 21:54:02.178" level="INFO">-1</msg>
+<status status="PASS" starttime="20210421 21:54:02.178" endtime="20210421 21:54:02.178"></status>
+</kw>
+<kw name="Get User Task By Correlation" library="AtlasEngineClient">
+<arguments>
+<arg>${CORRELATION}</arg>
+</arguments>
+<assign>
+<var>${USER_TASK}</var>
+</assign>
+<msg timestamp="20210421 21:54:02.530" level="INFO">/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type actual_owner_id detected when decoding UserTaskResponse.
+  warnings.warn(f"`NoneType` object {warning}.", RuntimeWarning)</msg>
+<msg timestamp="20210421 21:54:02.531" level="INFO">${USER_TASK} = UserTaskResponse(user_task_instance_id='5230d443-e785-42f3-b6f0-1d42ce2c6dbf', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Te...</msg>
+<status status="PASS" starttime="20210421 21:54:02.178" endtime="20210421 21:54:02.531"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${USER_TASK}</arg>
+</arguments>
+<msg timestamp="20210421 21:54:02.531" level="INFO">UserTaskResponse(user_task_instance_id='5230d443-e785-42f3-b6f0-1d42ce2c6dbf', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='d75a7898-f64c-462e-804c-758eedec78bd', process_instance_id='491051ca-227e-4533-89b7-a721de1dccde', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)</msg>
+<status status="PASS" starttime="20210421 21:54:02.531" endtime="20210421 21:54:02.531"></status>
+</kw>
+<status status="PASS" starttime="20210421 21:54:02.177" endtime="20210421 21:54:02.531" critical="yes"></status>
+</test>
+<doc>Template robot main suite.</doc>
+<status status="PASS" starttime="20210421 21:54:01.578" endtime="20210421 21:54:02.532"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="4" fail="0">Critical Tasks</stat>
+<stat pass="4" fail="0">All Tasks</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="4" fail="0" id="s1" name="Tasks">Tasks</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

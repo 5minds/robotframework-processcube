@@ -19,15 +19,18 @@
       <bpmn:incoming>Flow_1emla44</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_1emla44" sourceRef="Activity_11ujzez" targetRef="Event_1849q6p" />
-    <bpmn:task id="Activity_11ujzez" name="do it">
+    <bpmn:userTask id="Activity_11ujzez" name="do it">
       <bpmn:extensionElements>
         <camunda:properties>
-          <camunda:property name="enabled" value="false" />
+          <camunda:property name="enabled" value="true" />
         </camunda:properties>
+        <camunda:formData>
+          <camunda:formField id="field_01" label="field_01" type="string" defaultValue="Text" />
+        </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1r6vdyz</bpmn:incoming>
       <bpmn:outgoing>Flow_1emla44</bpmn:outgoing>
-    </bpmn:task>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1cidyxu">
@@ -57,7 +60,7 @@
           <dc:Bounds x="340" y="195" width="20" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0x6uedu_di" bpmnElement="Activity_11ujzez">
+      <bpmndi:BPMNShape id="Activity_1qq8io2_di" bpmnElement="Activity_11ujzez">
         <dc:Bounds x="180" y="130" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

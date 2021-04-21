@@ -1,7 +1,10 @@
 *** Settings ***
 Documentation   Template robot main suite.
 Library         AtlasEngineClient.py    http://localhost:56100
+Library    Collections
 
+*** Variables ***
+${CORRELATION}    -1
 
 *** Tasks ***
 Get engine info task
@@ -16,7 +19,13 @@ Deploy a process model
 
 *** Tasks ***
 Start process with payload
-    &{PAYLOAD} =    Create Dictionary    foo    bar    hello    world
-    ${RESULT}    Start Process     hello_robot_framework    ${PAYLOAD}
-    Log    ${RESULT.token_payload}
-    Should Be True    '${RESULT.token_payload["hello"]}'=='world'
+    &{PAYLOAD}=    Create Dictionary    foo    bar    hello    world
+    ${PROCESS}    Start Process     hello_robot_framework    ${PAYLOAD}
+    ${CORRELATION}=    Set Variable    ${PROCESS.correlation_id}
+    Should Be True    '${PROCESS.token_payload["hello"]}'=='world'
+
+*** Tasks ***
+Get User Task by Correlation
+    Log    ${CORRELATION}
+    ${USER_TASK}     Get User Task By Correlation    ${CORRELATION}
+    Log    ${USER_TASK}
