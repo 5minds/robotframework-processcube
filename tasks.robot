@@ -2,13 +2,14 @@
 Documentation   Template robot main suite.
 Library         Collections
 
-Library         AtlasEngineClient.py     http://localhost:56100
+Library         AtlasEngineClient.py     http://localhost:56100    worker_id=my worker
 #Library         AtlasEngineClient.py    self_hosted_engine = docker
 #Library         AtlasEngineClient.py    self_hosted_engine = node
 
 *** Variables ***
-${CORRELATION}    -1
-${USER_TASK_INSTANCE_ID}      -1
+${CORRELATION}            -1
+${USER_TASK_INSTANCE_ID}  -1
+${EXTERNAL_TASK_ID}       -1
 
 *** Tasks ***
 Get engine info task
@@ -17,15 +18,15 @@ Get engine info task
 
 *** Tasks ***
 Deploy a process
-    Deploy Process    hello_robot_framework.bpmn
+    Deploy Process        hello_robot_framework.bpmn
 
 
 *** Tasks ***
 Start process with payload
-    &{PAYLOAD}=           Create Dictionary        foo=bar    hello=world
-    ${PROCESS}=           Start Process            hello_robot_framework    ${PAYLOAD}
-    Set Suite Variable    ${CORRELATION}           ${PROCESS.correlation_id}
-    Should Be True        '${PROCESS.token_payload["hello"]}' == 'world'
+    &{PAYLOAD}=           Create Dictionary                    foo=bar    hello=world
+    ${PROCESS}=           Start Process                        hello_robot_framework    ${PAYLOAD}
+    Set Suite Variable    ${CORRELATION}                       ${PROCESS.correlation_id}
+    Should Be Equal       ${PROCESS.token_payload["hello"]}    world
 
 *** Tasks ***
 Get User Task by correlation_id
@@ -38,6 +39,17 @@ Get User Task by correlation_id
 
 *** Tasks ***
 Finish User Task
-    &{ANSWER}=           Create Dictionary              field_01=The Value of field 1
+    &{ANSWER}=           Create Dictionary                      field_01=The Value of field 1
     Log                  ${USER_TASK_INSTANCE_ID}
-    Finish User Task     ${USER_TASK_INSTANCE_ID}       ${ANSWER} 
+    Finish User Task     ${USER_TASK_INSTANCE_ID}               ${ANSWER}
+
+*** Tasks ***
+Get External Task
+    ${TASK}              Get Task                      topic=doExternal
+    Set Suite Variable   ${EXTERNAL_TASK_ID}                    ${TASK.id}
+
+*** Tasks ***
+Finish the external task
+    &{ANSWER}=           Create Dictionary                      external_field_01=The Value of field 1
+    Log                  ${EXTERNAL_TASK_ID}
+    Finish Task          ${EXTERNAL_TASK_ID}                    ${ANSWER}

@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.8.5 on darwin)" generated="20210423 11:21:41.982" rpa="true">
+<robot generator="Robot 3.2.2 (Python 3.8.5 on darwin)" generated="20210423 15:40:10.970" rpa="true">
 <suite id="s1" name="Tasks" source="/Users/mollenbeck/projects/moellenbeck/reps/my-first-extend-robot/tasks.robot">
 <test id="s1-t1" name="Get engine info task">
 <kw name="Get Engine Info" library="AtlasEngineClient">
 <assign>
 <var>${INFO}</var>
 </assign>
-<msg timestamp="20210423 11:21:42.236" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210423 11:21:42.238" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/info HTTP/1.1" 200 259</msg>
-<msg timestamp="20210423 11:21:42.240" level="INFO">${INFO} = {'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.7', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info':...</msg>
-<status status="PASS" starttime="20210423 11:21:42.229" endtime="20210423 11:21:42.240"></status>
+<msg timestamp="20210423 15:40:11.195" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.198" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/info HTTP/1.1" 200 259</msg>
+<msg timestamp="20210423 15:40:11.200" level="INFO">${INFO} = ApplicationInfo(name='Studio Engine (Beta)', package_name='@atlas-engine/fullstack_server', version='12.0.7', authority_url='http://localhost:11560/', allow_anonymous_root_access='true', extra_info={'...</msg>
+<status status="PASS" starttime="20210423 15:40:11.189" endtime="20210423 15:40:11.200"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${INFO}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.241" level="INFO">{'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.7', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info': {'portalUrl': 'http://localhost:56110/', 'startedBy': '5Minds Studio (Beta)'}}</msg>
-<status status="PASS" starttime="20210423 11:21:42.240" endtime="20210423 11:21:42.241"></status>
+<msg timestamp="20210423 15:40:11.200" level="INFO">ApplicationInfo(name='Studio Engine (Beta)', package_name='@atlas-engine/fullstack_server', version='12.0.7', authority_url='http://localhost:11560/', allow_anonymous_root_access='true', extra_info={'portalUrl': 'http://localhost:56110/', 'startedBy': '5Minds Studio (Beta)'})</msg>
+<status status="PASS" starttime="20210423 15:40:11.200" endtime="20210423 15:40:11.200"></status>
 </kw>
-<status status="PASS" starttime="20210423 11:21:42.228" endtime="20210423 11:21:42.241" critical="yes"></status>
+<status status="PASS" starttime="20210423 15:40:11.188" endtime="20210423 15:40:11.201" critical="yes"></status>
 </test>
 <test id="s1-t2" name="Deploy a process">
 <kw name="Deploy Process" library="AtlasEngineClient">
 <arguments>
 <arg>hello_robot_framework.bpmn</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.244" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210423 11:21:42.265" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_definitions HTTP/1.1" 201 None</msg>
-<status status="PASS" starttime="20210423 11:21:42.242" endtime="20210423 11:21:42.266"></status>
+<msg timestamp="20210423 15:40:11.205" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.225" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_definitions HTTP/1.1" 201 None</msg>
+<status status="PASS" starttime="20210423 15:40:11.201" endtime="20210423 15:40:11.226"></status>
 </kw>
-<status status="PASS" starttime="20210423 11:21:42.241" endtime="20210423 11:21:42.266" critical="yes"></status>
+<status status="PASS" starttime="20210423 15:40:11.201" endtime="20210423 15:40:11.226" critical="yes"></status>
 </test>
 <test id="s1-t3" name="Start process with payload">
 <kw name="Create Dictionary" library="BuiltIn">
@@ -42,8 +42,8 @@
 <assign>
 <var>&amp;{PAYLOAD}</var>
 </assign>
-<msg timestamp="20210423 11:21:42.268" level="INFO">&amp;{PAYLOAD} = { foo=bar | hello=world }</msg>
-<status status="PASS" starttime="20210423 11:21:42.268" endtime="20210423 11:21:42.268"></status>
+<msg timestamp="20210423 15:40:11.228" level="INFO">&amp;{PAYLOAD} = { foo=bar | hello=world }</msg>
+<status status="PASS" starttime="20210423 15:40:11.227" endtime="20210423 15:40:11.228"></status>
 </kw>
 <kw name="Start Process" library="AtlasEngineClient">
 <arguments>
@@ -53,10 +53,10 @@
 <assign>
 <var>${PROCESS}</var>
 </assign>
-<msg timestamp="20210423 11:21:42.271" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210423 11:21:42.308" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_models/hello_robot_framework/start HTTP/1.1" 200 188</msg>
-<msg timestamp="20210423 11:21:42.309" level="INFO">${PROCESS} = ProcessStartResponse(process_instance_id='be22b65e-c0aa-46fb-b6e6-050949daabae', correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', end_event_id='StartEvent_1', token_payload={'foo': 'bar', 'hello...</msg>
-<status status="PASS" starttime="20210423 11:21:42.268" endtime="20210423 11:21:42.309"></status>
+<msg timestamp="20210423 15:40:11.231" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.261" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_models/hello_robot_framework/start HTTP/1.1" 200 188</msg>
+<msg timestamp="20210423 15:40:11.262" level="INFO">${PROCESS} = ProcessStartResponse(process_instance_id='5a2a9aa3-9ca9-4cc9-ba78-b7e25b9c9ef3', correlation_id='c6a98330-e384-4451-9521-20ad580107a4', end_event_id='StartEvent_1', token_payload={'foo': 'bar', 'hello...</msg>
+<status status="PASS" starttime="20210423 15:40:11.228" endtime="20210423 15:40:11.262"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
@@ -64,17 +64,21 @@
 <arg>${CORRELATION}</arg>
 <arg>${PROCESS.correlation_id}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.310" level="INFO">${CORRELATION} = dd4e0d7e-03be-45b2-b4d9-2477c694df50</msg>
-<status status="PASS" starttime="20210423 11:21:42.309" endtime="20210423 11:21:42.310"></status>
+<msg timestamp="20210423 15:40:11.263" level="INFO">${CORRELATION} = c6a98330-e384-4451-9521-20ad580107a4</msg>
+<status status="PASS" starttime="20210423 15:40:11.262" endtime="20210423 15:40:11.263"></status>
 </kw>
-<kw name="Should Be True" library="BuiltIn">
-<doc>Fails if the given condition is not true.</doc>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
 <arguments>
-<arg>'${PROCESS.token_payload["hello"]}' == 'world'</arg>
+<arg>${PROCESS.token_payload["hello"]}</arg>
+<arg>world</arg>
 </arguments>
-<status status="PASS" starttime="20210423 11:21:42.310" endtime="20210423 11:21:42.310"></status>
+<msg timestamp="20210423 15:40:11.264" level="DEBUG">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210423 15:40:11.263" endtime="20210423 15:40:11.264"></status>
 </kw>
-<status status="PASS" starttime="20210423 11:21:42.267" endtime="20210423 11:21:42.311" critical="yes"></status>
+<status status="PASS" starttime="20210423 15:40:11.227" endtime="20210423 15:40:11.264" critical="yes"></status>
 </test>
 <test id="s1-t4" name="Get User Task by correlation_id">
 <kw name="Log" library="BuiltIn">
@@ -82,8 +86,8 @@
 <arguments>
 <arg>${CORRELATION}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.312" level="INFO">dd4e0d7e-03be-45b2-b4d9-2477c694df50</msg>
-<status status="PASS" starttime="20210423 11:21:42.311" endtime="20210423 11:21:42.312"></status>
+<msg timestamp="20210423 15:40:11.265" level="INFO">c6a98330-e384-4451-9521-20ad580107a4</msg>
+<status status="PASS" starttime="20210423 15:40:11.265" endtime="20210423 15:40:11.265"></status>
 </kw>
 <kw name="Get User Task By" library="AtlasEngineClient">
 <arguments>
@@ -92,35 +96,35 @@
 <assign>
 <var>${USER_TASK}</var>
 </assign>
-<msg timestamp="20210423 11:21:42.312" level="DEBUG">{'correlation_id': 'dd4e0d7e-03be-45b2-b4d9-2477c694df50'}</msg>
-<msg timestamp="20210423 11:21:42.312" level="INFO">UserTaskQuery(limit=0, offset=0, user_task_instance_id=None, flow_node_id=None, flow_node_name=None, flow_node_lane=None, correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', process_definition_id=None, process_model_id=None, process_instance_id=None, owner_id=None, state=None)</msg>
-<msg timestamp="20210423 11:21:42.315" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210423 11:21:42.326" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;correlationId=dd4e0d7e-03be-45b2-b4d9-2477c694df50&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 39</msg>
-<msg timestamp="20210423 11:21:42.327" level="INFO">[]</msg>
-<msg timestamp="20210423 11:21:42.431" level="INFO">Retry count: 1; delay: 0.2</msg>
-<msg timestamp="20210423 11:21:42.434" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210423 11:21:42.485" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;correlationId=dd4e0d7e-03be-45b2-b4d9-2477c694df50&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 None</msg>
-<msg timestamp="20210423 11:21:42.488" level="INFO">[UserTaskResponse(user_task_instance_id='f0f776ad-c376-4a94-a0d9-f12a125bcc19', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', process_instance_id='be22b65e-c0aa-46fb-b6e6-050949daabae', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)]</msg>
-<msg timestamp="20210423 11:21:42.488" level="INFO">/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type actual_owner_id detected when decoding UserTaskResponse.
+<msg timestamp="20210423 15:40:11.265" level="DEBUG">{'correlation_id': 'c6a98330-e384-4451-9521-20ad580107a4'}</msg>
+<msg timestamp="20210423 15:40:11.265" level="INFO">UserTaskQuery(limit=0, offset=0, user_task_instance_id=None, flow_node_id=None, flow_node_name=None, flow_node_lane=None, correlation_id='c6a98330-e384-4451-9521-20ad580107a4', process_definition_id=None, process_model_id=None, process_instance_id=None, owner_id=None, state=None)</msg>
+<msg timestamp="20210423 15:40:11.268" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.282" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;correlationId=c6a98330-e384-4451-9521-20ad580107a4&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 39</msg>
+<msg timestamp="20210423 15:40:11.283" level="INFO">[]</msg>
+<msg timestamp="20210423 15:40:11.386" level="INFO">Retry count: 1; delay: 0.2</msg>
+<msg timestamp="20210423 15:40:11.389" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.447" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;correlationId=c6a98330-e384-4451-9521-20ad580107a4&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 None</msg>
+<msg timestamp="20210423 15:40:11.450" level="INFO">[UserTaskResponse(user_task_instance_id='bd01ba22-f2bc-4c9d-8a21-cb76fab69677', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='c6a98330-e384-4451-9521-20ad580107a4', process_instance_id='5a2a9aa3-9ca9-4cc9-ba78-b7e25b9c9ef3', process_model_id='hello_robot_framework', flow_node_name='do User', actual_owner_id=None)]</msg>
+<msg timestamp="20210423 15:40:11.450" level="INFO">/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type actual_owner_id detected when decoding UserTaskResponse.
   warnings.warn(f"`NoneType` object {warning}.", RuntimeWarning)</msg>
-<msg timestamp="20210423 11:21:42.488" level="INFO">${USER_TASK} = UserTaskResponse(user_task_instance_id='f0f776ad-c376-4a94-a0d9-f12a125bcc19', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Te...</msg>
-<status status="PASS" starttime="20210423 11:21:42.312" endtime="20210423 11:21:42.488"></status>
+<msg timestamp="20210423 15:40:11.451" level="INFO">${USER_TASK} = UserTaskResponse(user_task_instance_id='bd01ba22-f2bc-4c9d-8a21-cb76fab69677', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Te...</msg>
+<status status="PASS" starttime="20210423 15:40:11.265" endtime="20210423 15:40:11.451"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${USER_TASK}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.489" level="INFO">UserTaskResponse(user_task_instance_id='f0f776ad-c376-4a94-a0d9-f12a125bcc19', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', process_instance_id='be22b65e-c0aa-46fb-b6e6-050949daabae', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)</msg>
-<status status="PASS" starttime="20210423 11:21:42.488" endtime="20210423 11:21:42.489"></status>
+<msg timestamp="20210423 15:40:11.451" level="INFO">UserTaskResponse(user_task_instance_id='bd01ba22-f2bc-4c9d-8a21-cb76fab69677', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='c6a98330-e384-4451-9521-20ad580107a4', process_instance_id='5a2a9aa3-9ca9-4cc9-ba78-b7e25b9c9ef3', process_model_id='hello_robot_framework', flow_node_name='do User', actual_owner_id=None)</msg>
+<status status="PASS" starttime="20210423 15:40:11.451" endtime="20210423 15:40:11.451"></status>
 </kw>
 <kw name="Should Not Be Empty" library="BuiltIn">
 <doc>Verifies that the given item is not empty.</doc>
 <arguments>
 <arg>${USER_TASK.user_task_instance_id}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.489" level="INFO">Length is 36</msg>
-<status status="PASS" starttime="20210423 11:21:42.489" endtime="20210423 11:21:42.489"></status>
+<msg timestamp="20210423 15:40:11.452" level="INFO">Length is 36</msg>
+<status status="PASS" starttime="20210423 15:40:11.451" endtime="20210423 15:40:11.452"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
@@ -128,8 +132,8 @@
 <arg>${USER_TASK_INSTANCE_ID}</arg>
 <arg>${USER_TASK.user_task_instance_id}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.490" level="INFO">${USER_TASK_INSTANCE_ID} = f0f776ad-c376-4a94-a0d9-f12a125bcc19</msg>
-<status status="PASS" starttime="20210423 11:21:42.489" endtime="20210423 11:21:42.490"></status>
+<msg timestamp="20210423 15:40:11.452" level="INFO">${USER_TASK_INSTANCE_ID} = bd01ba22-f2bc-4c9d-8a21-cb76fab69677</msg>
+<status status="PASS" starttime="20210423 15:40:11.452" endtime="20210423 15:40:11.452"></status>
 </kw>
 <kw name="Should Be Equal" library="BuiltIn">
 <doc>Fails if the given objects are unequal.</doc>
@@ -137,12 +141,12 @@
 <arg>${USER_TASK.process_model_id}</arg>
 <arg>hello_robot_framework</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.490" level="DEBUG">Argument types are:
+<msg timestamp="20210423 15:40:11.453" level="DEBUG">Argument types are:
 &lt;type 'unicode'&gt;
 &lt;type 'unicode'&gt;</msg>
-<status status="PASS" starttime="20210423 11:21:42.490" endtime="20210423 11:21:42.490"></status>
+<status status="PASS" starttime="20210423 15:40:11.452" endtime="20210423 15:40:11.453"></status>
 </kw>
-<status status="PASS" starttime="20210423 11:21:42.311" endtime="20210423 11:21:42.491" critical="yes"></status>
+<status status="PASS" starttime="20210423 15:40:11.264" endtime="20210423 15:40:11.453" critical="yes"></status>
 </test>
 <test id="s1-t5" name="Finish User Task">
 <kw name="Create Dictionary" library="BuiltIn">
@@ -153,40 +157,104 @@
 <assign>
 <var>&amp;{ANSWER}</var>
 </assign>
-<msg timestamp="20210423 11:21:42.492" level="INFO">&amp;{ANSWER} = { field_01=The Value of field 1 }</msg>
-<status status="PASS" starttime="20210423 11:21:42.491" endtime="20210423 11:21:42.492"></status>
+<msg timestamp="20210423 15:40:11.454" level="INFO">&amp;{ANSWER} = { field_01=The Value of field 1 }</msg>
+<status status="PASS" starttime="20210423 15:40:11.454" endtime="20210423 15:40:11.454"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${USER_TASK_INSTANCE_ID}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.492" level="INFO">f0f776ad-c376-4a94-a0d9-f12a125bcc19</msg>
-<status status="PASS" starttime="20210423 11:21:42.492" endtime="20210423 11:21:42.492"></status>
+<msg timestamp="20210423 15:40:11.454" level="INFO">bd01ba22-f2bc-4c9d-8a21-cb76fab69677</msg>
+<status status="PASS" starttime="20210423 15:40:11.454" endtime="20210423 15:40:11.454"></status>
 </kw>
 <kw name="Finish User Task" library="AtlasEngineClient">
 <arguments>
 <arg>${USER_TASK_INSTANCE_ID}</arg>
 <arg>${ANSWER}</arg>
 </arguments>
-<msg timestamp="20210423 11:21:42.494" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210423 11:21:42.524" level="DEBUG">http://localhost:56100 "PUT /atlas_engine/api/v1/user_tasks/f0f776ad-c376-4a94-a0d9-f12a125bcc19/finish HTTP/1.1" 204 0</msg>
-<status status="PASS" starttime="20210423 11:21:42.492" endtime="20210423 11:21:42.525"></status>
+<msg timestamp="20210423 15:40:11.457" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.526" level="DEBUG">http://localhost:56100 "PUT /atlas_engine/api/v1/user_tasks/bd01ba22-f2bc-4c9d-8a21-cb76fab69677/finish HTTP/1.1" 204 0</msg>
+<status status="PASS" starttime="20210423 15:40:11.454" endtime="20210423 15:40:11.526"></status>
 </kw>
-<status status="PASS" starttime="20210423 11:21:42.491" endtime="20210423 11:21:42.525" critical="yes"></status>
+<status status="PASS" starttime="20210423 15:40:11.453" endtime="20210423 15:40:11.526" critical="yes"></status>
+</test>
+<test id="s1-t6" name="Get External Task">
+<kw name="Get Task" library="AtlasEngineClient">
+<arguments>
+<arg>topic=doExternal</arg>
+</arguments>
+<assign>
+<var>${TASK}</var>
+</assign>
+<msg timestamp="20210423 15:40:11.527" level="INFO">get task with FetchAndLockRequestPayload(worker_id='my worker', topic_name='doExternal', max_tasks=1, long_polling_timeout=10000, lock_duration=100000, payload_filter=None)</msg>
+<msg timestamp="20210423 15:40:11.530" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.567" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/external_tasks/fetch_and_lock HTTP/1.1" 200 526</msg>
+<msg timestamp="20210423 15:40:11.569" level="INFO">[ExternalTask(id='178c51ac-4721-42c4-a97b-273b071700fb', worker_id='my worker', topic='doExternal', flow_node_instance_id='92fc82d5-287c-4512-adcb-4cd06436d33c', correlation_id='c6a98330-e384-4451-9521-20ad580107a4', process_definition_id='Definition_d254d14f-a14d-4f9c-901f-9060c7b85d0a', process_instance_id='5a2a9aa3-9ca9-4cc9-ba78-b7e25b9c9ef3', owner_id='dummy_token', payload={'do': 'External'}, lock_expiration_time='2021-04-23T13:41:51.562Z', state='pending', finished_at=None, result=None, error=None, created_at='2021-04-23T13:40:11.553Z')]</msg>
+<msg timestamp="20210423 15:40:11.569" level="INFO">/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type finished_at detected when decoding ExternalTask.
+  warnings.warn(f"`NoneType` object {warning}.", RuntimeWarning)
+/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type result detected when decoding ExternalTask.
+  warnings.warn(f"`NoneType` object {warning}.", RuntimeWarning)
+/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type error detected when decoding ExternalTask.
+  warnings.warn(f"`NoneType` object {warning}.", RuntimeWarning)</msg>
+<msg timestamp="20210423 15:40:11.569" level="INFO">${TASK} = ExternalTask(id='178c51ac-4721-42c4-a97b-273b071700fb', worker_id='my worker', topic='doExternal', flow_node_instance_id='92fc82d5-287c-4512-adcb-4cd06436d33c', correlation_id='c6a98330-e384-4451-9521...</msg>
+<status status="PASS" starttime="20210423 15:40:11.527" endtime="20210423 15:40:11.570"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${EXTERNAL_TASK_ID}</arg>
+<arg>${TASK.id}</arg>
+</arguments>
+<msg timestamp="20210423 15:40:11.570" level="INFO">${EXTERNAL_TASK_ID} = 178c51ac-4721-42c4-a97b-273b071700fb</msg>
+<status status="PASS" starttime="20210423 15:40:11.570" endtime="20210423 15:40:11.570"></status>
+</kw>
+<status status="PASS" starttime="20210423 15:40:11.527" endtime="20210423 15:40:11.570" critical="yes"></status>
+</test>
+<test id="s1-t7" name="Finish the external task">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>external_field_01=The Value of field 1</arg>
+</arguments>
+<assign>
+<var>&amp;{ANSWER}</var>
+</assign>
+<msg timestamp="20210423 15:40:11.571" level="INFO">&amp;{ANSWER} = { external_field_01=The Value of field 1 }</msg>
+<status status="PASS" starttime="20210423 15:40:11.571" endtime="20210423 15:40:11.571"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${EXTERNAL_TASK_ID}</arg>
+</arguments>
+<msg timestamp="20210423 15:40:11.571" level="INFO">178c51ac-4721-42c4-a97b-273b071700fb</msg>
+<status status="PASS" starttime="20210423 15:40:11.571" endtime="20210423 15:40:11.571"></status>
+</kw>
+<kw name="Finish Task" library="AtlasEngineClient">
+<arguments>
+<arg>${EXTERNAL_TASK_ID}</arg>
+<arg>${ANSWER}</arg>
+</arguments>
+<msg timestamp="20210423 15:40:11.572" level="INFO">finish task with FinishExternalTaskRequestPayload(worker_id='my worker', result={'external_field_01': 'The Value of field 1'})</msg>
+<msg timestamp="20210423 15:40:11.574" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 15:40:11.582" level="DEBUG">http://localhost:56100 "PUT /atlas_engine/api/v1/external_tasks/178c51ac-4721-42c4-a97b-273b071700fb/finish HTTP/1.1" 204 0</msg>
+<status status="PASS" starttime="20210423 15:40:11.572" endtime="20210423 15:40:11.582"></status>
+</kw>
+<status status="PASS" starttime="20210423 15:40:11.571" endtime="20210423 15:40:11.583" critical="yes"></status>
 </test>
 <doc>Template robot main suite.</doc>
-<status status="PASS" starttime="20210423 11:21:41.985" endtime="20210423 11:21:42.525"></status>
+<status status="PASS" starttime="20210423 15:40:10.972" endtime="20210423 15:40:11.583"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="5" fail="0">Critical Tasks</stat>
-<stat pass="5" fail="0">All Tasks</stat>
+<stat pass="7" fail="0">Critical Tasks</stat>
+<stat pass="7" fail="0">All Tasks</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="5" fail="0" id="s1" name="Tasks">Tasks</stat>
+<stat pass="7" fail="0" id="s1" name="Tasks">Tasks</stat>
 </suite>
 </statistics>
 <errors>
