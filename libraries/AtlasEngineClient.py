@@ -1,4 +1,5 @@
 import time
+from typing import Dict, Any
 
 from atlas_engine_client.core.api import Client
 from atlas_engine_client.core.api import StartCallbackType
@@ -79,3 +80,6 @@ class AtlasEngineClient:
                     f"Retry count: {current_retry}; delay: {current_delay}")
 
         return user_task
+
+    def finish_user_task(self, user_task_instance_id: str, payload: Dict[str, Any]):
+        self._client.user_task_finish(user_task_instance_id, payload)

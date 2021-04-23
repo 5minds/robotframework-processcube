@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.8.5 on darwin)" generated="20210422 13:54:34.624" rpa="true">
+<robot generator="Robot 3.2.2 (Python 3.8.5 on darwin)" generated="20210423 11:21:41.982" rpa="true">
 <suite id="s1" name="Tasks" source="/Users/mollenbeck/projects/moellenbeck/reps/my-first-extend-robot/tasks.robot">
 <test id="s1-t1" name="Get engine info task">
 <kw name="Get Engine Info" library="AtlasEngineClient">
 <assign>
 <var>${INFO}</var>
 </assign>
-<msg timestamp="20210422 13:54:35.002" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210422 13:54:35.006" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/info HTTP/1.1" 200 259</msg>
-<msg timestamp="20210422 13:54:35.010" level="INFO">${INFO} = {'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info':...</msg>
-<status status="PASS" starttime="20210422 13:54:34.988" endtime="20210422 13:54:35.010"></status>
+<msg timestamp="20210423 11:21:42.236" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 11:21:42.238" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/info HTTP/1.1" 200 259</msg>
+<msg timestamp="20210423 11:21:42.240" level="INFO">${INFO} = {'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.7', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info':...</msg>
+<status status="PASS" starttime="20210423 11:21:42.229" endtime="20210423 11:21:42.240"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${INFO}</arg>
 </arguments>
-<msg timestamp="20210422 13:54:35.012" level="INFO">{'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.5', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info': {'portalUrl': 'http://localhost:56110/', 'startedBy': '5Minds Studio (Beta)'}}</msg>
-<status status="PASS" starttime="20210422 13:54:35.011" endtime="20210422 13:54:35.013"></status>
+<msg timestamp="20210423 11:21:42.241" level="INFO">{'name': 'Studio Engine (Beta)', 'package_name': '@atlas-engine/fullstack_server', 'version': '12.0.7', 'authority_url': 'http://localhost:11560/', 'allow_anonymous_root_access': 'true', 'extra_info': {'portalUrl': 'http://localhost:56110/', 'startedBy': '5Minds Studio (Beta)'}}</msg>
+<status status="PASS" starttime="20210423 11:21:42.240" endtime="20210423 11:21:42.241"></status>
 </kw>
-<status status="PASS" starttime="20210422 13:54:34.987" endtime="20210422 13:54:35.013" critical="yes"></status>
+<status status="PASS" starttime="20210423 11:21:42.228" endtime="20210423 11:21:42.241" critical="yes"></status>
 </test>
 <test id="s1-t2" name="Deploy a process">
 <kw name="Deploy Process" library="AtlasEngineClient">
 <arguments>
 <arg>hello_robot_framework.bpmn</arg>
 </arguments>
-<msg timestamp="20210422 13:54:35.022" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210422 13:54:35.056" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_definitions HTTP/1.1" 201 None</msg>
-<status status="PASS" starttime="20210422 13:54:35.017" endtime="20210422 13:54:35.058"></status>
+<msg timestamp="20210423 11:21:42.244" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 11:21:42.265" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_definitions HTTP/1.1" 201 None</msg>
+<status status="PASS" starttime="20210423 11:21:42.242" endtime="20210423 11:21:42.266"></status>
 </kw>
-<status status="PASS" starttime="20210422 13:54:35.015" endtime="20210422 13:54:35.058" critical="yes"></status>
+<status status="PASS" starttime="20210423 11:21:42.241" endtime="20210423 11:21:42.266" critical="yes"></status>
 </test>
 <test id="s1-t3" name="Start process with payload">
 <kw name="Create Dictionary" library="BuiltIn">
@@ -42,8 +42,8 @@
 <assign>
 <var>&amp;{PAYLOAD}</var>
 </assign>
-<msg timestamp="20210422 13:54:35.063" level="INFO">&amp;{PAYLOAD} = { foo=bar | hello=world }</msg>
-<status status="PASS" starttime="20210422 13:54:35.061" endtime="20210422 13:54:35.063"></status>
+<msg timestamp="20210423 11:21:42.268" level="INFO">&amp;{PAYLOAD} = { foo=bar | hello=world }</msg>
+<status status="PASS" starttime="20210423 11:21:42.268" endtime="20210423 11:21:42.268"></status>
 </kw>
 <kw name="Start Process" library="AtlasEngineClient">
 <arguments>
@@ -53,31 +53,28 @@
 <assign>
 <var>${PROCESS}</var>
 </assign>
-<msg timestamp="20210422 13:54:35.070" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210422 13:54:35.134" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_models/hello_robot_framework/start HTTP/1.1" 200 188</msg>
-<msg timestamp="20210422 13:54:35.136" level="INFO">${PROCESS} = ProcessStartResponse(process_instance_id='dd6f9f41-7c20-43bf-8b80-53fb8241d80d', correlation_id='5f66a9d9-566d-42e5-9f8d-f52b455bbd32', end_event_id='StartEvent_1', token_payload={'foo': 'bar', 'hello...</msg>
-<status status="PASS" starttime="20210422 13:54:35.064" endtime="20210422 13:54:35.136"></status>
+<msg timestamp="20210423 11:21:42.271" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 11:21:42.308" level="DEBUG">http://localhost:56100 "POST /atlas_engine/api/v1/process_models/hello_robot_framework/start HTTP/1.1" 200 188</msg>
+<msg timestamp="20210423 11:21:42.309" level="INFO">${PROCESS} = ProcessStartResponse(process_instance_id='be22b65e-c0aa-46fb-b6e6-050949daabae', correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', end_event_id='StartEvent_1', token_payload={'foo': 'bar', 'hello...</msg>
+<status status="PASS" starttime="20210423 11:21:42.268" endtime="20210423 11:21:42.309"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${CORRELATION}</arg>
-<arg>${PROCESS.process_instance_id}</arg>
+<arg>${PROCESS.correlation_id}</arg>
 </arguments>
-<msg timestamp="20210422 13:54:35.138" level="INFO">${CORRELATION} = dd6f9f41-7c20-43bf-8b80-53fb8241d80d</msg>
-<status status="PASS" starttime="20210422 13:54:35.137" endtime="20210422 13:54:35.138"></status>
+<msg timestamp="20210423 11:21:42.310" level="INFO">${CORRELATION} = dd4e0d7e-03be-45b2-b4d9-2477c694df50</msg>
+<status status="PASS" starttime="20210423 11:21:42.309" endtime="20210423 11:21:42.310"></status>
 </kw>
 <kw name="Should Be True" library="BuiltIn">
 <doc>Fails if the given condition is not true.</doc>
 <arguments>
-<arg>'${PROCESS.token_payload["hello"]}' == 'world2'</arg>
+<arg>'${PROCESS.token_payload["hello"]}' == 'world'</arg>
 </arguments>
-<msg timestamp="20210422 13:54:35.140" level="FAIL">''world' == 'world2'' should be true.</msg>
-<msg timestamp="20210422 13:54:35.140" level="DEBUG">Traceback (most recent call last):
-  None</msg>
-<status status="FAIL" starttime="20210422 13:54:35.139" endtime="20210422 13:54:35.140"></status>
+<status status="PASS" starttime="20210423 11:21:42.310" endtime="20210423 11:21:42.310"></status>
 </kw>
-<status status="FAIL" starttime="20210422 13:54:35.060" endtime="20210422 13:54:35.141" critical="yes">''world' == 'world2'' should be true.</status>
+<status status="PASS" starttime="20210423 11:21:42.267" endtime="20210423 11:21:42.311" critical="yes"></status>
 </test>
 <test id="s1-t4" name="Get User Task by correlation_id">
 <kw name="Log" library="BuiltIn">
@@ -85,87 +82,111 @@
 <arguments>
 <arg>${CORRELATION}</arg>
 </arguments>
-<msg timestamp="20210422 13:54:35.144" level="INFO">dd6f9f41-7c20-43bf-8b80-53fb8241d80d</msg>
-<status status="PASS" starttime="20210422 13:54:35.143" endtime="20210422 13:54:35.144"></status>
+<msg timestamp="20210423 11:21:42.312" level="INFO">dd4e0d7e-03be-45b2-b4d9-2477c694df50</msg>
+<status status="PASS" starttime="20210423 11:21:42.311" endtime="20210423 11:21:42.312"></status>
 </kw>
 <kw name="Get User Task By" library="AtlasEngineClient">
 <arguments>
-<arg>process_instance_id=${CORRELATION}</arg>
+<arg>correlation_id=${CORRELATION}</arg>
 </arguments>
 <assign>
 <var>${USER_TASK}</var>
 </assign>
-<msg timestamp="20210422 13:54:35.145" level="DEBUG">{'process_instance_id': 'dd6f9f41-7c20-43bf-8b80-53fb8241d80d'}</msg>
-<msg timestamp="20210422 13:54:35.146" level="INFO">UserTaskQuery(limit=0, offset=0, user_task_instance_id=None, flow_node_id=None, flow_node_name=None, flow_node_lane=None, correlation_id=None, process_definition_id=None, process_model_id=None, process_instance_id='dd6f9f41-7c20-43bf-8b80-53fb8241d80d', owner_id=None, state=None)</msg>
-<msg timestamp="20210422 13:54:35.152" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210422 13:54:35.234" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;processInstanceId=dd6f9f41-7c20-43bf-8b80-53fb8241d80d&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 39</msg>
-<msg timestamp="20210422 13:54:35.235" level="INFO">[]</msg>
-<msg timestamp="20210422 13:54:35.338" level="INFO">Retry count: 1; delay: 0.2</msg>
-<msg timestamp="20210422 13:54:35.343" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210422 13:54:35.447" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;processInstanceId=dd6f9f41-7c20-43bf-8b80-53fb8241d80d&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 39</msg>
-<msg timestamp="20210422 13:54:35.448" level="INFO">[]</msg>
-<msg timestamp="20210422 13:54:35.652" level="INFO">Retry count: 2; delay: 0.4</msg>
-<msg timestamp="20210422 13:54:35.657" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210422 13:54:35.760" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;processInstanceId=dd6f9f41-7c20-43bf-8b80-53fb8241d80d&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 None</msg>
-<msg timestamp="20210422 13:54:35.767" level="INFO">[UserTaskResponse(user_task_instance_id='d450457b-5351-4093-9676-c522fbe0ca43', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='5f66a9d9-566d-42e5-9f8d-f52b455bbd32', process_instance_id='dd6f9f41-7c20-43bf-8b80-53fb8241d80d', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)]</msg>
-<msg timestamp="20210422 13:54:35.767" level="INFO">/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type actual_owner_id detected when decoding UserTaskResponse.
+<msg timestamp="20210423 11:21:42.312" level="DEBUG">{'correlation_id': 'dd4e0d7e-03be-45b2-b4d9-2477c694df50'}</msg>
+<msg timestamp="20210423 11:21:42.312" level="INFO">UserTaskQuery(limit=0, offset=0, user_task_instance_id=None, flow_node_id=None, flow_node_name=None, flow_node_lane=None, correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', process_definition_id=None, process_model_id=None, process_instance_id=None, owner_id=None, state=None)</msg>
+<msg timestamp="20210423 11:21:42.315" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 11:21:42.326" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;correlationId=dd4e0d7e-03be-45b2-b4d9-2477c694df50&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 39</msg>
+<msg timestamp="20210423 11:21:42.327" level="INFO">[]</msg>
+<msg timestamp="20210423 11:21:42.431" level="INFO">Retry count: 1; delay: 0.2</msg>
+<msg timestamp="20210423 11:21:42.434" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 11:21:42.485" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;correlationId=dd4e0d7e-03be-45b2-b4d9-2477c694df50&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 None</msg>
+<msg timestamp="20210423 11:21:42.488" level="INFO">[UserTaskResponse(user_task_instance_id='f0f776ad-c376-4a94-a0d9-f12a125bcc19', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', process_instance_id='be22b65e-c0aa-46fb-b6e6-050949daabae', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)]</msg>
+<msg timestamp="20210423 11:21:42.488" level="INFO">/Users/mollenbeck/.pyenv/versions/robot_framework_3.8.5/lib/python3.8/site-packages/dataclasses_json/core.py:171: RuntimeWarning: `NoneType` object value of non-optional type actual_owner_id detected when decoding UserTaskResponse.
   warnings.warn(f"`NoneType` object {warning}.", RuntimeWarning)</msg>
-<msg timestamp="20210422 13:54:35.767" level="INFO">${USER_TASK} = UserTaskResponse(user_task_instance_id='d450457b-5351-4093-9676-c522fbe0ca43', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Te...</msg>
-<status status="PASS" starttime="20210422 13:54:35.144" endtime="20210422 13:54:35.767"></status>
+<msg timestamp="20210423 11:21:42.488" level="INFO">${USER_TASK} = UserTaskResponse(user_task_instance_id='f0f776ad-c376-4a94-a0d9-f12a125bcc19', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Te...</msg>
+<status status="PASS" starttime="20210423 11:21:42.312" endtime="20210423 11:21:42.488"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${USER_TASK}</arg>
 </arguments>
-<msg timestamp="20210422 13:54:35.769" level="INFO">UserTaskResponse(user_task_instance_id='d450457b-5351-4093-9676-c522fbe0ca43', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='5f66a9d9-566d-42e5-9f8d-f52b455bbd32', process_instance_id='dd6f9f41-7c20-43bf-8b80-53fb8241d80d', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)</msg>
-<status status="PASS" starttime="20210422 13:54:35.768" endtime="20210422 13:54:35.769"></status>
+<msg timestamp="20210423 11:21:42.489" level="INFO">UserTaskResponse(user_task_instance_id='f0f776ad-c376-4a94-a0d9-f12a125bcc19', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='dd4e0d7e-03be-45b2-b4d9-2477c694df50', process_instance_id='be22b65e-c0aa-46fb-b6e6-050949daabae', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)</msg>
+<status status="PASS" starttime="20210423 11:21:42.488" endtime="20210423 11:21:42.489"></status>
 </kw>
-<status status="PASS" starttime="20210422 13:54:35.142" endtime="20210422 13:54:35.769" critical="yes"></status>
+<kw name="Should Not Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is not empty.</doc>
+<arguments>
+<arg>${USER_TASK.user_task_instance_id}</arg>
+</arguments>
+<msg timestamp="20210423 11:21:42.489" level="INFO">Length is 36</msg>
+<status status="PASS" starttime="20210423 11:21:42.489" endtime="20210423 11:21:42.489"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${USER_TASK_INSTANCE_ID}</arg>
+<arg>${USER_TASK.user_task_instance_id}</arg>
+</arguments>
+<msg timestamp="20210423 11:21:42.490" level="INFO">${USER_TASK_INSTANCE_ID} = f0f776ad-c376-4a94-a0d9-f12a125bcc19</msg>
+<status status="PASS" starttime="20210423 11:21:42.489" endtime="20210423 11:21:42.490"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${USER_TASK.process_model_id}</arg>
+<arg>hello_robot_framework</arg>
+</arguments>
+<msg timestamp="20210423 11:21:42.490" level="DEBUG">Argument types are:
+&lt;type 'unicode'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20210423 11:21:42.490" endtime="20210423 11:21:42.490"></status>
+</kw>
+<status status="PASS" starttime="20210423 11:21:42.311" endtime="20210423 11:21:42.491" critical="yes"></status>
 </test>
-<test id="s1-t5" name="Get User Task">
-<kw name="Log" library="BuiltIn">
-<doc>Logs the given message with the given level.</doc>
+<test id="s1-t5" name="Finish User Task">
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
 <arguments>
-<arg>${CORRELATION}</arg>
+<arg>field_01=The Value of field 1</arg>
 </arguments>
-<msg timestamp="20210422 13:54:35.771" level="INFO">dd6f9f41-7c20-43bf-8b80-53fb8241d80d</msg>
-<status status="PASS" starttime="20210422 13:54:35.771" endtime="20210422 13:54:35.771"></status>
-</kw>
-<kw name="Get User Task By" library="AtlasEngineClient">
 <assign>
-<var>${USER_TASK}</var>
+<var>&amp;{ANSWER}</var>
 </assign>
-<msg timestamp="20210422 13:54:35.771" level="DEBUG">{}</msg>
-<msg timestamp="20210422 13:54:35.772" level="INFO">UserTaskQuery(limit=0, offset=0, user_task_instance_id=None, flow_node_id=None, flow_node_name=None, flow_node_lane=None, correlation_id=None, process_definition_id=None, process_model_id=None, process_instance_id=None, owner_id=None, state=None)</msg>
-<msg timestamp="20210422 13:54:35.775" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
-<msg timestamp="20210422 13:54:36.465" level="DEBUG">http://localhost:56100 "GET /atlas_engine/api/v1/flow_node_instances?limit=0&amp;offset=0&amp;state=suspended&amp;flowNodeType=bpmn%3AUserTask HTTP/1.1" 200 None</msg>
-<msg timestamp="20210422 13:54:36.490" level="INFO">[UserTaskResponse(user_task_instance_id='d450457b-5351-4093-9676-c522fbe0ca43', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='5f66a9d9-566d-42e5-9f8d-f52b455bbd32', process_instance_id='dd6f9f41-7c20-43bf-8b80-53fb8241d80d', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='fafa49e9-8479-4d52-898d-3dc0ce4778e6', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='0551515a-312d-4eae-9936-fe3708d0b64e', process_instance_id='56ec7df7-ea88-4b68-9715-91914d3ab0a1', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='43a487ff-ff77-4dcc-b79d-585c44730ec5', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='deb79634-c430-4b6f-b7e1-abd03bd01371', process_instance_id='33e41c8c-fe9b-4023-a330-ae390de0d886', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='82b484c4-3c10-4c19-8550-b81c5b408475', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='75592687-fca0-47cf-af38-451b2ef1d9f1', process_instance_id='367d76ec-8b94-4d43-bd62-9f825c73db63', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='6a40275e-1f19-4b78-b39f-221aaf767065', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='a39a2213-f145-4054-a096-4abd813ad77b', process_instance_id='913157b4-8c92-4448-8aab-819c9364c1a6', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='320ea8ed-311a-4663-8a93-28895ad60552', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='f0c170e8-bb1e-46df-8c4d-cdb6ff9a2b8b', process_instance_id='d492ee26-3e0b-418d-89f3-e038a58d4de0', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='808a9648-7b44-4af9-8c31-b6da49232a10', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='d59f6fc5-f5f6-40e2-a4f4-b76c4e30bdfc', process_instance_id='96be86f9-c8c8-419e-add8-3d213d80583a', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='c8df49c4-1905-4477-b3dd-e7d3a04022ca', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='f5268211-a91f-416d-a08c-1cbf90cca88f', process_instance_id='93217841-99f3-47fa-89c9-f6c380139ffc', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='4fbad111-8238-4b4b-8e8a-cff397cb2601', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='82c35881-a04e-437c-b952-dd194e9ff8c1', process_instance_id='b7e70d1e-fd7b-4d57-9c89-61b5c472026f', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='3000085b-cacf-4a3d-b2f3-f26f052053fa', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='1c1f0ce7-5775-4e14-a3d6-a4d183070820', process_instance_id='08bbf141-3214-4fe3-9afd-fdf02e925b5e', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='f1f613b8-9d8c-49ff-b247-89ebe7cec09e', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='5277279a-14de-418a-b5be-87f40777d76b', process_instance_id='671a1eb3-3175-4ae9-95e6-cb6a2984c869', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='c0fda8ef-8551-4ebb-85f1-5450d3080aff', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='1919d0eb-64a8-4b14-bcb5-b3b15ee00f55', process_instance_id='64f3504b-7824-4c52-bc6f-b78394f594ed', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='547c2ab6-5b6f-4800-ad32-3ea5186f586f', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='ca15792f-b806-4979-a62c-65b1387b7dc9', process_instance_id='b9bffc09-a688-4bef-8458-0471b468e0d3', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='d61d3ee3-1cbb-453a-93b6-7dc44d62ea64', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='94751aef-279e-46d5-a58b-847e446e7cf6', process_instance_id='9e99ec59-2bef-41d3-b565-b83356f8dd31', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='45b50950-0cce-4ddc-b66f-0dffe2d5605d', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='c00999c7-34da-48d9-be81-0d325d62ef98', process_instance_id='0cc656bd-04e4-4d02-a99a-dc5d2bd8f762', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='7ed3b974-a5ac-485f-8b26-25a5b7a11656', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='68d0a2b8-14e2-487f-bec1-b8fc5920d3d6', process_instance_id='3fc2bced-1fb1-4f22-9e62-dc44fe4dff5f', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='ea2cb126-1f91-4352-aa02-d3747af760eb', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='73999bbf-d9cd-4541-a281-8245e80666bb', process_instance_id='11301bd4-f2eb-4096-b08a-e28127639ca1', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='c79148bd-6eb5-4f7e-b2a3-57987cff18bd', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='6f796d78-0daa-4848-b259-3a3a54fdef8b', process_instance_id='815b1fec-88f3-474b-9a9e-8e3aafb2d964', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='99fea2d2-cc9d-410e-ab32-d472cc3e2420', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='a3c35f0a-b174-4df2-99a9-c51387c39c58', process_instance_id='9f917957-9d14-49f0-9d4f-3260771bf404', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='0554dd12-e124-4e62-a8af-51bd2033fffe', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='1af8d85b-4432-418b-bc81-81046f88c2df', process_instance_id='23d0e2d1-5830-42ac-a227-9d90e7d0e0d2', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='e36ca9d0-f6d1-495c-a796-74a0562ec7f9', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='2798af4b-c0f4-4f81-8bda-0fef25fd1f4f', process_instance_id='f9ddeae4-ca48-42c5-b9d2-059e9fc0d191', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='2eac8add-9dd0-4bab-af80-90409d3003b4', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='b89e4807-52fd-412f-bb15-94db88d953b6', process_instance_id='eca528be-2ad3-43ba-96c6-234fd485e7ef', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='7e9a0297-4d4b-42b1-b647-1e985a001685', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='012654cb-29b1-4f72-a41c-95612efdf90a', process_instance_id='b60407ed-af0b-4ce3-b7a9-ea69ae06ee5b', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='3b4fc8f5-9924-4dc3-aea8-32d6be9afd7e', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='5d7977f6-d709-48c1-9d68-10f6b46af9ac', process_instance_id='a116df63-6308-4ed2-a5cc-c7f280a35868', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None), UserTaskResponse(user_task_instance_id='d19b6edb-019b-404b-8bf2-237bfa380de8', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='a9d99070-088f-448d-923b-5197938f4e6e', process_instance_id='5040d66e-f3c7-4505-884a-3ecc7aabc1f1', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)]</msg>
-<msg timestamp="20210422 13:54:36.491" level="INFO">${USER_TASK} = UserTaskResponse(user_task_instance_id='d450457b-5351-4093-9676-c522fbe0ca43', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Te...</msg>
-<status status="PASS" starttime="20210422 13:54:35.771" endtime="20210422 13:54:36.491"></status>
+<msg timestamp="20210423 11:21:42.492" level="INFO">&amp;{ANSWER} = { field_01=The Value of field 1 }</msg>
+<status status="PASS" starttime="20210423 11:21:42.491" endtime="20210423 11:21:42.492"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
-<arg>${USER_TASK}</arg>
+<arg>${USER_TASK_INSTANCE_ID}</arg>
 </arguments>
-<msg timestamp="20210422 13:54:36.492" level="INFO">UserTaskResponse(user_task_instance_id='d450457b-5351-4093-9676-c522fbe0ca43', user_task_config=UserTaskConfig(form_fields=[FormFields(id='field_01', type='string', label='field_01', default_value='Text')], custom_form='DynamicForm'), owner_id='dummy_token', correlation_id='5f66a9d9-566d-42e5-9f8d-f52b455bbd32', process_instance_id='dd6f9f41-7c20-43bf-8b80-53fb8241d80d', process_model_id='hello_robot_framework', flow_node_name='do it', actual_owner_id=None)</msg>
-<status status="PASS" starttime="20210422 13:54:36.492" endtime="20210422 13:54:36.492"></status>
+<msg timestamp="20210423 11:21:42.492" level="INFO">f0f776ad-c376-4a94-a0d9-f12a125bcc19</msg>
+<status status="PASS" starttime="20210423 11:21:42.492" endtime="20210423 11:21:42.492"></status>
 </kw>
-<status status="PASS" starttime="20210422 13:54:35.770" endtime="20210422 13:54:36.493" critical="yes"></status>
+<kw name="Finish User Task" library="AtlasEngineClient">
+<arguments>
+<arg>${USER_TASK_INSTANCE_ID}</arg>
+<arg>${ANSWER}</arg>
+</arguments>
+<msg timestamp="20210423 11:21:42.494" level="DEBUG">Starting new HTTP connection (1): localhost:56100</msg>
+<msg timestamp="20210423 11:21:42.524" level="DEBUG">http://localhost:56100 "PUT /atlas_engine/api/v1/user_tasks/f0f776ad-c376-4a94-a0d9-f12a125bcc19/finish HTTP/1.1" 204 0</msg>
+<status status="PASS" starttime="20210423 11:21:42.492" endtime="20210423 11:21:42.525"></status>
+</kw>
+<status status="PASS" starttime="20210423 11:21:42.491" endtime="20210423 11:21:42.525" critical="yes"></status>
 </test>
 <doc>Template robot main suite.</doc>
-<status status="FAIL" starttime="20210422 13:54:34.627" endtime="20210422 13:54:36.495"></status>
+<status status="PASS" starttime="20210423 11:21:41.985" endtime="20210423 11:21:42.525"></status>
 </suite>
 <statistics>
 <total>
-<stat pass="4" fail="1">Critical Tasks</stat>
-<stat pass="4" fail="1">All Tasks</stat>
+<stat pass="5" fail="0">Critical Tasks</stat>
+<stat pass="5" fail="0">All Tasks</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="4" fail="1" id="s1" name="Tasks">Tasks</stat>
+<stat pass="5" fail="0" id="s1" name="Tasks">Tasks</stat>
 </suite>
 </statistics>
 <errors>
