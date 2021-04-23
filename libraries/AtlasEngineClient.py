@@ -92,7 +92,7 @@ class AtlasEngineClient:
         self._client.user_task_finish(user_task_instance_id, payload)
 
 
-    def get_task(self, topic: str, options: dict={}):
+    def get_external_task(self, topic: str, options: dict={}):
 
         request = FetchAndLockRequestPayload(
             worker_id = self._worker_id,
@@ -128,7 +128,7 @@ class AtlasEngineClient:
 
         return external_task
 
-    def finish_task(self, external_task_id: str, result: Dict[str, any]):
+    def finish_external_task(self, external_task_id: str, result: Dict[str, any]):
         request = FinishExternalTaskRequestPayload(
             worker_id = self._worker_id,
             result = result
