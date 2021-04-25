@@ -34,22 +34,9 @@ Get User Task by correlation_id
     ${USER_TASK}             Get User Task By                      correlation_id=${CORRELATION}
     Log                      ${USER_TASK}
     Should Not Be Empty      ${USER_TASK.user_task_instance_id}
-    Set Suite Variable       ${USER_TASK_INSTANCE_ID}              ${USER_TASK.user_task_instance_id}
     Should Be Equal          ${USER_TASK.process_model_id}         hello_robot_framework
 
-*** Tasks ***
-Finish User Task
-    &{ANSWER}=               Create Dictionary                     field_01=The Value of field 1
-    Log                      ${USER_TASK_INSTANCE_ID}
-    Finish User Task         ${USER_TASK_INSTANCE_ID}              ${ANSWER}
+    &{ANSWER}=               Create Dictionary                     field_01=not_handle_task
 
-*** Tasks ***
-Get External Task
-    ${TASK}                  Get External Task                     topic=doExternal
-    Set Suite Variable       ${EXTERNAL_TASK_ID}                   ${TASK.id}
+    Finish User Task         ${USER_TASK.user_task_instance_id}    ${ANSWER}
 
-*** Tasks ***
-Finish the external task
-    &{ANSWER}=               Create Dictionary                     external_field_01=The Value of field 1
-    Log                      ${EXTERNAL_TASK_ID}
-    Finish External Task     ${EXTERNAL_TASK_ID}                   ${ANSWER}
