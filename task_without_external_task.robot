@@ -48,4 +48,9 @@ Send Message
 
 *** Tasks ***
 Send Signal
-    Send Signal              CatchSignal                           delay=0.2        
+    Send Signal              CatchSignal                           delay=0.2     
+
+*** Tasks ***
+Get Process Instance
+    ${RESULT}                Get Processinstance                  correlation_id=${CORRELATION}
+    Log                      ${RESULT}

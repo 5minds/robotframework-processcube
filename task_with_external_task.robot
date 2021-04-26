@@ -46,3 +46,9 @@ Handle External Task
     &{ANSWER}=               Create Dictionary                     external_field_01=The Value of field 1
     Log                      ${TASK.id}
     Finish External Task     ${TASK.id}                            ${ANSWER}
+
+*** Tasks ***
+Get Processinstance Result
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+    Should Not Be Empty      ${RESULT['external_field_01']}

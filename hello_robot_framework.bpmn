@@ -74,7 +74,7 @@
       <bpmn:outgoing>Flow_1w1s2qm</bpmn:outgoing>
     </bpmn:task>
     <bpmn:sequenceFlow id="Flow_1w1s2qm" sourceRef="Activity_1kblryn" targetRef="Event_1lgms5t" />
-    <bpmn:intermediateCatchEvent id="Event_09cyhme" name="catch it">
+    <bpmn:intermediateCatchEvent id="Event_09cyhme" name="catch message">
       <bpmn:incoming>Flow_0jbkg4v</bpmn:incoming>
       <bpmn:outgoing>Flow_1dg75cg</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_12kycjv" messageRef="Message_TywxOtFz" />
@@ -96,6 +96,14 @@
       <bpmndi:BPMNShape id="Lane_1xzf0d3_di" bpmnElement="Lane_1xzf0d3" isHorizontal="true">
         <dc:Bounds x="35" y="4" width="875" height="346" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1w1s2qm_di" bpmnElement="Flow_1w1s2qm">
+        <di:waypoint x="600" y="280" />
+        <di:waypoint x="662" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zu63ly_di" bpmnElement="Flow_0zu63ly">
+        <di:waypoint x="600" y="170" />
+        <di:waypoint x="715" y="170" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_155hvep_di" bpmnElement="Flow_155hvep">
         <di:waypoint x="698" y="280" />
         <di:waypoint x="740" y="280" />
@@ -125,14 +133,6 @@
       <bpmndi:BPMNEdge id="Flow_1r6vdyz_di" bpmnElement="Flow_1r6vdyz">
         <di:waypoint x="128" y="170" />
         <di:waypoint x="180" y="170" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0zu63ly_di" bpmnElement="Flow_0zu63ly">
-        <di:waypoint x="600" y="170" />
-        <di:waypoint x="715" y="170" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1w1s2qm_di" bpmnElement="Flow_1w1s2qm">
-        <di:waypoint x="600" y="280" />
-        <di:waypoint x="662" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="92" y="152" width="36" height="36" />
@@ -164,7 +164,7 @@
       <bpmndi:BPMNShape id="Event_1xm3g4p_di" bpmnElement="Event_09cyhme">
         <dc:Bounds x="412" y="262" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="413" y="305" width="35" height="14" />
+          <dc:Bounds x="394" y="305" width="74" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0oj0g20_di" bpmnElement="Event_1lgms5t">
