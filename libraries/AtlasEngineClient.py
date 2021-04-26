@@ -3,10 +3,12 @@ from typing import Dict, Any
 import uuid
 
 from atlas_engine_client.core.api import Client
-from atlas_engine_client.core.api import StartCallbackType
+from atlas_engine_client.core.api import FetchAndLockRequestPayload
+from atlas_engine_client.core.api import FinishExternalTaskRequestPayload
+from atlas_engine_client.core.api import MessageTriggerRequest
 from atlas_engine_client.core.api import ProcessStartRequest
+from atlas_engine_client.core.api import StartCallbackType
 from atlas_engine_client.core.api import UserTaskQuery
-from atlas_engine_client.core.api.helpers.external_tasks import FetchAndLockRequestPayload, FinishExternalTaskRequestPayload
 
 from robot.api import logger
 
@@ -42,7 +44,7 @@ class AtlasEngineClient:
 
         return result
 
-    def start_process(self, process_model, payload={}):
+    def start_processmodel(self, process_model, payload={}):
 
         request = ProcessStartRequest(
             process_model_id = process_model,
@@ -137,3 +139,27 @@ class AtlasEngineClient:
         logger.info(f"finish task with {request}")
 
         self._client.external_task_finish(external_task_id, request)
+
+    def send_message(self, message_name: str, payload: Dict[str, Any]={}, **options):
+
+        delay = options.get('delay', None)
+
+        if delay:
+            logger.info(f"Send message {message_name} with seconds {delay} delay.")
+            time.sleep(float(delay))
+
+        request = MessageTriggerRequest(
+            payload=payload
+        )
+
+        self._client.events_trigger_message(message_name, request)
+
+    def send_signal(self, signal_name, **options):
+        
+        delay = options.get("delay", None)
+
+        if delay:
+            logger.info(f"Send signal {signal_name} with {delay} seconds delay.")
+            time.sleep(float(delay))
+
+        self._client.events_trigger_signal(signal_name)        

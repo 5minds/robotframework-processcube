@@ -3,6 +3,7 @@ Documentation   Template robot main suite.
 Library         Collections
 
 Library         AtlasEngineClient.py     http://localhost:56100    worker_id=my worker
+Library    Process
 #Library         AtlasEngineClient.py    self_hosted_engine = docker
 #Library         AtlasEngineClient.py    self_hosted_engine = node
 
@@ -24,12 +25,12 @@ Deploy a process
 *** Tasks ***
 Start process with payload
     &{PAYLOAD}=              Create Dictionary                     foo=bar    hello=world
-    ${PROCESS}=              Start Process                         hello_robot_framework    ${PAYLOAD}
+    ${PROCESS}=              Start Processmodel                    hello_robot_framework    ${PAYLOAD}
     Set Suite Variable       ${CORRELATION}                        ${PROCESS.correlation_id}
     Should Be Equal          ${PROCESS.token_payload["hello"]}     world
 
 *** Tasks ***
-Get User Task by correlation_id
+Handle User Task by correlation_id
     Log                      ${CORRELATION}
     ${USER_TASK}             Get User Task By                      correlation_id=${CORRELATION}
     Log                      ${USER_TASK}
@@ -40,3 +41,11 @@ Get User Task by correlation_id
 
     Finish User Task         ${USER_TASK.user_task_instance_id}    ${ANSWER}
 
+*** Tasks ***
+Send Message
+    &{PAYLOAD}=              Create Dictionary                     message_field1=Value field 1    message_field2=Value field 2
+    Send Message             CatchMessage                          ${PAYLOAD}                      delay=0.5
+
+*** Tasks ***
+Send Signal
+    Send Signal              CatchSignal                           delay=0.2        

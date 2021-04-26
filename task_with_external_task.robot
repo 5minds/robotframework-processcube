@@ -24,12 +24,12 @@ Deploy a process
 *** Tasks ***
 Start process with payload
     &{PAYLOAD}=              Create Dictionary                     foo=bar    hello=world
-    ${PROCESS}=              Start Process                         hello_robot_framework    ${PAYLOAD}
+    ${PROCESS}=              Start Processmodel                    hello_robot_framework    ${PAYLOAD}
     Set Suite Variable       ${CORRELATION}                        ${PROCESS.correlation_id}
     Should Be Equal          ${PROCESS.token_payload["hello"]}     world
 
 *** Tasks ***
-Get User Task by correlation_id
+Handle User Task by correlation_id
     Log                      ${CORRELATION}
     ${USER_TASK}             Get User Task By                      correlation_id=${CORRELATION}
     Log                      ${USER_TASK}
@@ -41,7 +41,7 @@ Get User Task by correlation_id
     Finish User Task         ${USER_TASK.user_task_instance_id}    ${ANSWER}
 
 *** Tasks ***
-Get External Task
+Handle External Task
     ${TASK}                  Get External Task                     topic=doExternal
     &{ANSWER}=               Create Dictionary                     external_field_01=The Value of field 1
     Log                      ${TASK.id}
