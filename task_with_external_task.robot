@@ -7,8 +7,7 @@ ${EXTERNAL_TASK_ID}          -1
 Documentation   Template robot main suite.
 Library         Collections
 
-Library         AtlasEngineClient.py     engine_url=http://localhost:56100    worker_id=my worker
-#Library         AtlasEngineClient.py    self_hosted_engine=docker
+Library         AtlasEngineClient    engine_url=http://localhost:56100    worker_id=my worker
 
 *** Tasks ***
 Get engine info task

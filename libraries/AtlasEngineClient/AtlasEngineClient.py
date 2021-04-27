@@ -14,11 +14,11 @@ from atlas_engine_client.core.api import UserTaskQuery
 
 from robot.api import logger
 
-from docker_handler import DockerHandler
+from .docker_handler import DockerHandler
 
 class AtlasEngineClient:
 
-    ROBOT_LIBRARY_SCOPE = 'SUITE'
+    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
 
     def __init__(self, **kwargs):
         self._engine_url = kwargs.get('engine_url', None)
@@ -38,19 +38,22 @@ class AtlasEngineClient:
         if self._engine_url:
             client = Client(self._engine_url)
         elif self._self_hosted_engine == 'docker':
+            logger.console(f"Starting engine within a docker container ...")
             self._docker_handler = DockerHandler(**self._docker_options)
-
-            logger.console("before start")
             self._docker_handler.start()
-            logger.console("after start")
-
+            logger.console(f"Starting engine within a docker container ... done")
+            
             engine_url = self._docker_handler.get_engine_url()
+
             client = Client(engine_url)
         else:
             raise ArgumentError("No 'engine_url' or 'self_hosted_engine' parameter provided.")
 
         return client
 
+    def engine_shutdown(self):
+        if self._docker_handler:
+            self._docker_handler.shutown()
 
     def deploy_processmodel(self, pathname):
         self._client.process_defintion_deploy_by_pathname(pathname)

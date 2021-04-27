@@ -1,6 +1,11 @@
 import docker
 import time
 
+from robot.api import logger
+
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
+
 class DockerHandler:
 
     IMAGE_NAME = '5minds/atlas_engine_fullstack_server'
@@ -15,10 +20,10 @@ class DockerHandler:
         self._client = docker.DockerClient(**params)
         self._api_client = docker.APIClient(**params)
         self._name = kwargs.get('container_name', 'robot_framework-atlas_engine')
-        self._auto_remove = kwargs.get('auto_remove', True)
+        self._auto_remove = str2bool(kwargs.get('auto_remove', True))
         self._image_name = kwargs.get('image_name', DockerHandler.IMAGE_NAME)
 
-        self._delay_after_create = kwargs.get('delay_after_create', 5.0)
+        self._delay= kwargs.get('delay', 5.0)
 
     def start(self):
         args = {
@@ -33,7 +38,8 @@ class DockerHandler:
                 self._container.restart()
         else:
             self._container = self._client.containers.run(self._image_name, **args)
-            time.sleep(float(self._delay_after_create))
+        
+        time.sleep(float(self._delay))
 
         attr = self._api_client.inspect_container(self._container.id)
         key = list(attr['NetworkSettings']['Ports'].keys())[0]

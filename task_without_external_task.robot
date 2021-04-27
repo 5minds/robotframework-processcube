@@ -2,15 +2,15 @@
 ${CORRELATION}               -1
 ${USER_TASK_INSTANCE_ID}     -1
 ${EXTERNAL_TASK_ID}          -1
-&{DOCKER_OPTIONS}            hello=world
+&{DOCKER_OPTIONS}            auto_remove=False
 
 *** Settings ***
 Documentation   Template robot main suite.
 Library         Collections
 
-#Library         AtlasEngineClient.py     engine_url=http://localhost:56100    worker_id=my worker
-Library         AtlasEngineClient.py    self_hosted_engine=docker    worker_id=my worker    docker_options=${DOCKER_OPTIONS}
-#Library         AtlasEngineClient.py    self_hosted_engine = node
+#Library         AtlasEngineClient     engine_url=http://localhost:56100    worker_id=my worker
+Library          AtlasEngineClient    self_hosted_engine=docker    worker_id=my worker    docker_options=${DOCKER_OPTIONS}
+Suite Teardown   Engine Shutdown 
 
 *** Tasks ***
 Get engine info task
