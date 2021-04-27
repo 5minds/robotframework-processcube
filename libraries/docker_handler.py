@@ -1,15 +1,24 @@
 import docker
-
+import time
 
 class DockerHandler:
 
     IMAGE_NAME = '5minds/atlas_engine_fullstack_server'
 
-    def __init__(self, auto_remove=True):
-        self._client = docker.from_env()
-        self._api_client = docker.APIClient()
-        self._name = 'robot_framework-atlas_engine'
-        self._auto_remove = auto_remove
+    def __init__(self, **kwargs):
+
+        params = {
+            'base_url': 'unix://var/run/docker.sock', 
+            'timeout': 120
+        }
+
+        self._client = docker.DockerClient(**params)
+        self._api_client = docker.APIClient(**params)
+        self._name = kwargs.get('container_name', 'robot_framework-atlas_engine')
+        self._auto_remove = kwargs.get('auto_remove', True)
+        self._image_name = kwargs.get('image_name', DockerHandler.IMAGE_NAME)
+
+        self._delay_after_create = kwargs.get('delay_after_create', 5.0)
 
     def start(self):
         args = {
@@ -23,12 +32,18 @@ class DockerHandler:
             if self._container.status == 'exited':
                 self._container.restart()
         else:
-            self._container = self._client.containers.run(DockerHandler.IMAGE_NAME, **args)
+            self._container = self._client.containers.run(self._image_name, **args)
+            time.sleep(float(self._delay_after_create))
 
         attr = self._api_client.inspect_container(self._container.id)
-        key = '8000/tcp'
+        key = list(attr['NetworkSettings']['Ports'].keys())[0]
 
         self._port = attr['NetworkSettings']['Ports'][key][0]['HostPort']
+
+    def get_engine_url(self):
+        engine_url = f"http://localhost:{self._port}"
+
+        return engine_url
 
     def find_container(self):
         containers = self._client.containers.list(all=True, filters={'name': self._name})
@@ -47,14 +62,13 @@ class DockerHandler:
         if prune:
             self._client.containers.prune()
 
-
     def report(self):
         print(f"container id: {self._container.id}")
         print(f"container attr: {self._port}")
 
 
 def main():
-    handler = DockerHandler()
+    handler = DockerHandler(auto_remove=False)
 
     handler.start()
     handler.report()

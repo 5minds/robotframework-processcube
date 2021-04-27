@@ -1,14 +1,14 @@
+*** Variables ***
+${CORRELATION}               -1
+${USER_TASK_INSTANCE_ID}     -1
+${EXTERNAL_TASK_ID}          -1
+
 *** Settings ***
 Documentation   Template robot main suite.
 Library         Collections
 
 Library         AtlasEngineClient.py     engine_url=http://localhost:56100    worker_id=my worker
 #Library         AtlasEngineClient.py    self_hosted_engine=docker
-
-*** Variables ***
-${CORRELATION}               -1
-${USER_TASK_INSTANCE_ID}     -1
-${EXTERNAL_TASK_ID}          -1
 
 *** Tasks ***
 Get engine info task
@@ -17,7 +17,7 @@ Get engine info task
 
 *** Tasks ***
 Deploy a process
-    Deploy Process           hello_robot_framework.bpmn
+    Deploy Processmodel      hello_robot_framework.bpmn
 
 
 *** Tasks ***
