@@ -1,6 +1,6 @@
+from ctypes import ArgumentError
 import time
 from typing import Dict, Any
-import uuid
 
 from atlas_engine_client.core.api import Client
 from atlas_engine_client.core.api import FetchAndLockRequestPayload
@@ -17,15 +17,29 @@ from robot.api import logger
 
 class AtlasEngineClient:
 
-    def __init__(self, engine_url, **kwargs):
-        self._client = Client(engine_url)
+    def __init__(self, **kwargs):
+        self._engine_url = kwargs.get('engine_url', None)
+        self._self_hosted_engine = kwargs.get('self_hosted_engine', None)
 
         self._max_retries = kwargs.get('max_retries', 5)
         self._backoff_factor = kwargs.get('backoff_factor', 2)
         self._delay = kwargs.get('delay', 0.1)
         self._worker_id = kwargs.get('worker_id', "robot_framework")
 
-        logger.info("call constructor")
+        self._client = self._create_client()
+
+    def _create_client(self):
+        client = None
+
+        if self._engine_url:
+            client = Client(self._engine_url)
+        elif self._self_hosted_engine == 'docker':
+            pass
+        else:
+            raise ArgumentError("No 'engine_url' or 'self_hosted_engine' parameter provided.")
+
+        return client
+
 
     def deploy_process(self, pathname):
         self._client.process_defintion_deploy_by_pathname(pathname)

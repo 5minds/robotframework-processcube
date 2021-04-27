@@ -2,9 +2,8 @@
 Documentation   Template robot main suite.
 Library         Collections
 
-Library         AtlasEngineClient.py     http://localhost:56100    worker_id=my worker
-#Library         AtlasEngineClient.py    self_hosted_engine = docker
-#Library         AtlasEngineClient.py    self_hosted_engine = node
+Library         AtlasEngineClient.py     engine_url=http://localhost:56100    worker_id=my worker
+#Library         AtlasEngineClient.py    self_hosted_engine=docker
 
 *** Variables ***
 ${CORRELATION}               -1
