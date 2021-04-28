@@ -7,7 +7,7 @@ ${EXTERNAL_TASK_ID}          -1
 Documentation   Template robot main suite.
 Library         Collections
 
-Library         AtlasEngineClient    engine_url=http://localhost:56100    worker_id=my worker
+Library         ProcessCubeLibrary    engine_url=http://localhost:56100    worker_id=my worker
 
 *** Tasks ***
 Get engine info task
