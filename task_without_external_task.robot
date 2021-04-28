@@ -9,7 +9,7 @@ Documentation   Template robot main suite.
 Library         Collections
 
 #Library         AtlasEngineClient     engine_url=http://localhost:56100    worker_id=my worker
-Library          AtlasEngineClient    self_hosted_engine=docker    worker_id=my worker    docker_options=${DOCKER_OPTIONS}
+Library          ProcessCubeLibrary    self_hosted_engine=docker    worker_id=my worker    docker_options=${DOCKER_OPTIONS}
 Suite Teardown   Engine Shutdown 
 
 *** Tasks ***

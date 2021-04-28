@@ -19,7 +19,7 @@ class DockerHandler:
 
         self._client = docker.DockerClient(**params)
         self._api_client = docker.APIClient(**params)
-        self._name = kwargs.get('container_name', 'robot_framework-atlas_engine')
+        self._name = kwargs.get('container_name', 'robotframework_processcube-engine')
         self._auto_remove = str2bool(kwargs.get('auto_remove', True))
         self._image_name = kwargs.get('image_name', DockerHandler.IMAGE_NAME)
 

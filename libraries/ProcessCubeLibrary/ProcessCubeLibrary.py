@@ -16,7 +16,7 @@ from robot.api import logger
 
 from .docker_handler import DockerHandler
 
-class AtlasEngineClient:
+class ProcessCubeLibrary:
 
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
 
