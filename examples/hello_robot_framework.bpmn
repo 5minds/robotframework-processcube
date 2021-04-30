@@ -79,7 +79,7 @@
       <bpmn:outgoing>Flow_1dg75cg</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_12kycjv" messageRef="Message_TywxOtFz" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="Event_1lgms5t" name="catch another">
+    <bpmn:intermediateCatchEvent id="Event_1lgms5t" name="catch signal">
       <bpmn:incoming>Flow_1w1s2qm</bpmn:incoming>
       <bpmn:outgoing>Flow_155hvep</bpmn:outgoing>
       <bpmn:signalEventDefinition id="SignalEventDefinition_1g3s7ee" signalRef="Signal_a0IxG9UL" />
@@ -170,7 +170,7 @@
       <bpmndi:BPMNShape id="Event_0oj0g20_di" bpmnElement="Event_1lgms5t">
         <dc:Bounds x="662" y="262" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="647" y="305" width="67" height="14" />
+          <dc:Bounds x="651" y="305" width="59" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

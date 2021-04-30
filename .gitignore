@@ -1,3 +1,7 @@
+examples/log.html
+examples/output.xml
+examples/report.html
+__pycache__
 testrun/
 output/
 venv/
