@@ -1,6 +1,8 @@
 examples/log.html
 examples/output.xml
 examples/report.html
+dist
+robotframework_processcube.egg-info
 __pycache__
 testrun/
 output/

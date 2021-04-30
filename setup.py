@@ -2,6 +2,14 @@
 
 import setuptools
 
+try:
+    from pip.req import parse_requirements
+except ImportError:  # pip >= 10.0.0
+    from pip._internal.req import parse_requirements
+
+parsed_reqs = parse_requirements('requirements.txt', session='hack')
+installed_reqs = [str(ir.requirement) for ir in parsed_reqs]
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
@@ -9,7 +17,7 @@ name = "5Minds IT-Solutions GmbH & Co. KG"
 
 setuptools.setup(
     name="robotframework-processcube",
-    version=setuptools.sic('2.0.0-alpha.4'),
+    version=setuptools.sic('1.0.0-alpha.1'),
     description="Robot Framework Keywords for processcube workflow engine.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -17,6 +25,7 @@ setuptools.setup(
     author_email="processcube@5minds.de",
     url="https://github.com/atlas-engine-contrib/robotframework-processcube",
     packages=setuptools.find_packages(),
+    install_requires=installed_reqs,
     classifiers=[
         "Intended Audience :: Developers",
         "Natural Language :: English",
@@ -28,5 +37,4 @@ setuptools.setup(
         "Framework :: Robot Framework",
     ],
     license="MIT Licence",
-    install_requires=["robotframework>=3.2", "requests", "frozendict", 'atlas-engine-client>=2.0.0a4','dataclass_json'],
 )
