@@ -1,0 +1,128 @@
+name: Node CI
+
+on: [push]
+
+env:
+  CI_TOOLS_VERSION: "3.2.0"
+
+jobs:
+  get_version:
+    runs-on: [self-hosted, k8s.5minds.cloud]
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install dependencies
+        # "setuptools>=46.1.0" is required for "setuptools.sic()"
+        run: |
+          pip install --upgrade "setuptools>=46.1.0"
+          npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
+
+      - name: Prepare version infos
+        id: prepare_version
+        run: |
+          ci_tools prepare-version --allow-dirty-workdir --mode python
+          echo "::set-output name=VERSION::$(ci_tools get-version --mode python)"
+          echo "::set-output name=MAJOR_VERSION::$(ci_tools get-version --major --mode python)"
+
+    outputs:
+      VERSION: ${{ steps.prepare_version.outputs.VERSION }}
+      MAJOR_VERSION: ${{ steps.prepare_version.outputs.MAJOR_VERSION }}
+
+  build_and_publish:
+    runs-on: [self-hosted, k8s.5minds.cloud]
+    needs: get_version
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Get version from common step
+        run: |
+          echo "VERSION=${{ needs.get_version.outputs.VERSION }}" >> $GITHUB_ENV
+          echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
+
+      - name: Use Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install dependencies
+        # "setuptools>=46.1.0" is required for "setuptools.sic()"
+        run: |
+          pip install --upgrade "setuptools>=46.1.0"
+          pip install wheel
+          npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
+
+      - name: Set version
+        run: |
+          ci_tools set-version --version ${{ env.VERSION }} --mode python
+
+      - name: build
+        run: python setup.py sdist bdist_wheel
+
+      - name: Install dependencies
+        run: |
+          pip install twine
+
+      - name: Publish on PyPi
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          twine upload dist/*
+
+  create_release:
+    runs-on: [self-hosted, k8s.5minds.cloud]
+    needs: [get_version, build_and_publish]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Get version from common step
+        run: |
+          echo "VERSION=${{ needs.get_version.outputs.VERSION }}" >> $GITHUB_ENV
+          echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
+
+      - name: Use Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install dependencies
+        # "setuptools>=46.1.0" is required for "setuptools.sic()"
+        run: |
+          pip install --upgrade "setuptools>=46.1.0"
+          npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
+
+      - name: Set version
+        run: |
+          ci_tools set-version --version ${{ env.VERSION }} --mode python
+
+      - name: Commit & tag version
+        env:
+          GH_USER: ${{ secrets.GH_CI_USER_NAME }}
+          GH_TOKEN: ${{ secrets.GH_CI_USER_TOKEN }}
+        run: |
+          ci_tools commit-and-tag-version --only-on-primary-branches --mode python
+          ci_tools update-github-release --mode python --only-on-primary-branches --use-title-and-text-from-git-tag
