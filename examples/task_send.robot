@@ -14,6 +14,7 @@ Library          ProcessCubeLibrary    self_hosted_engine=docker    worker_id=my
 
 *** Tasks ***
 Get engine info task
+    [Tags]                   req-123                               req-456
     ${INFO}                  Get Engine Info
     Log                      ${INFO}
 
