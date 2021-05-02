@@ -24,7 +24,6 @@ Start process with payload
     &{PAYLOAD}=              Create Dictionary                     foo=bar    hello=world
     ${PROCESS}=              Start Processmodel                    hello_robot_framework    ${PAYLOAD}
     Set Suite Variable       ${CORRELATION}                        ${PROCESS.correlation_id}
-    Should Be Equal          ${PROCESS.token_payload["hello"]}     world
 
 *** Tasks ***
 Handle User Task by correlation_id
