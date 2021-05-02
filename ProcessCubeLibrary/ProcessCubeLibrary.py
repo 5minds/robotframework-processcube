@@ -2,8 +2,10 @@
 from atlas_engine_client.core.api import Client
 
 from .keywords import DeployKeyword
+from .keywords import EmptyTaskKeyword
 from .keywords import EngineKeyword
 from .keywords import ExternalTaskKeyword
+from .keywords import ManualTaskKeyword
 from .keywords import ProcessInstanceKeyword
 from .keywords import SendKeyword
 from .keywords import StartKeyword
@@ -14,8 +16,10 @@ from robot.api import logger
 from .docker_handler import DockerHandler
 
 
-class ProcessCubeLibrary(DeployKeyword, EngineKeyword, ExternalTaskKeyword, ProcessInstanceKeyword, 
-    SendKeyword, StartKeyword, UserTaskKeyword):
+class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword, 
+    EngineKeyword, ExternalTaskKeyword, ManualTaskKeyword, 
+    ProcessInstanceKeyword, SendKeyword, StartKeyword, 
+    UserTaskKeyword):
 
     ROBOT_LIBRARY_SCOPE = 'GLOBAL'
 
