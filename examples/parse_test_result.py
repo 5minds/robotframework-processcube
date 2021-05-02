@@ -16,10 +16,10 @@ class ParseTestResult:
 
             status = suite.find('status')
             doc = suite.find('doc')
-            print('-' * 35)
+            print('-' * 50)
             print(f"suite '{suite.get('name')}' with status '{status.get('status')}' from {source}")
             print(f"doc: {doc.text}")
-            print('-' * 35)
+            print('-' * 50)
             tests = suite.findall('test')
 
             for test in tests:
@@ -27,7 +27,7 @@ class ParseTestResult:
                 print(f"test: '{test.get('name')}' with status '{status.get('status')}'")
 
 
-            print('')
+            print('=' * 50)
 
 
 def main():
