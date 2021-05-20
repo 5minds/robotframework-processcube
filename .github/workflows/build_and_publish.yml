@@ -3,7 +3,7 @@ name: Robotframework ProcessCube
 on:
   push:
     branches:
-      - main
+      - master
       - beta
       - develop
 env:
