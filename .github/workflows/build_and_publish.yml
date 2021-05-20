@@ -1,7 +1,11 @@
-name: Node CI
+name: Robotframework ProcessCube
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - master
+      - beta
+      - develop
 env:
   CI_TOOLS_VERSION: "3.2.0"
 
