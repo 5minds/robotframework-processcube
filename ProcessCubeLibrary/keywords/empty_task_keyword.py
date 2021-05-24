@@ -4,6 +4,8 @@ from atlas_engine_client.core.api import EmptyTaskQuery
 
 from robot.api import logger
 
+from ._retry_helper import retry_on_exception
+
 
 class EmptyTaskKeyword:
 
@@ -14,6 +16,7 @@ class EmptyTaskKeyword:
         self._backoff_factor = kwargs.get('backoff_factor', 2)
         self._delay = kwargs.get('delay', 0.1)
 
+    @retry_on_exception
     def get_empty_task_by(self, **kwargs):
 
         logger.debug(kwargs)
@@ -48,5 +51,6 @@ class EmptyTaskKeyword:
 
         return empty_task
 
+    @retry_on_exception
     def finish_empty_task(self, empty_task_instance_id: str):
         self._client.empty_task_finish(empty_task_instance_id)

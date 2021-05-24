@@ -6,6 +6,8 @@ from atlas_engine_client.core.api import FlowNodeInstanceResponse
 
 from robot.api import logger
 
+from ._retry_helper import retry_on_exception
+
 
 class ProcessInstanceKeyword:
 
@@ -16,6 +18,7 @@ class ProcessInstanceKeyword:
         self._backoff_factor = kwargs.get('backoff_factor', 2)
         self._delay = kwargs.get('delay', 0.1)
 
+    @retry_on_exception
     def get_processinstance(self, **kwargs) -> FlowNodeInstanceResponse:
 
         query_dict = {
@@ -53,6 +56,7 @@ class ProcessInstanceKeyword:
 
         return flow_node_instance
 
+    @retry_on_exception
     def get_processinstance_result(self, **kwargs) -> Dict[str, Any]:
         result = self.get_processinstance(**kwargs)
 

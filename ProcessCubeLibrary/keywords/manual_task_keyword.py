@@ -4,7 +4,7 @@ from atlas_engine_client.core.api import ManualTaskQuery
 
 from robot.api import logger
 
-
+from ._retry_helper import retry_on_exception
 class ManualTaskKeyword:
 
     def __init__(self, client, **kwargs):
@@ -14,6 +14,7 @@ class ManualTaskKeyword:
         self._backoff_factor = kwargs.get('backoff_factor', 2)
         self._delay = kwargs.get('delay', 0.1)
 
+    @retry_on_exception
     def get_manual_task_by(self, **kwargs):
 
         logger.debug(kwargs)
@@ -48,5 +49,6 @@ class ManualTaskKeyword:
 
         return manual_task
 
+    @retry_on_exception
     def finish_manual_task(self, manual_task_instance_id: str):
         self._client.manual_task_finish(manual_task_instance_id)

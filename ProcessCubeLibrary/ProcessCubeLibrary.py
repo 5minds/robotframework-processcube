@@ -28,9 +28,9 @@ class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
         self._self_hosted_engine = kwargs.get('self_hosted_engine', None)
         self._docker_options = kwargs.get('docker_options', {})
 
-        self._max_retries = kwargs.get('max_retries', 5)
-        self._backoff_factor = kwargs.get('backoff_factor', 2)
-        self._delay = kwargs.get('delay', 0.1)
+        self._max_retries = int(kwargs.get('max_retries', 5))
+        self._backoff_factor = int(kwargs.get('backoff_factor', 2))
+        self._delay = float(kwargs.get('delay', 0.1))
         self._worker_id = kwargs.get('worker_id', "robot_framework")
 
         self._client = self._create_client(**kwargs)

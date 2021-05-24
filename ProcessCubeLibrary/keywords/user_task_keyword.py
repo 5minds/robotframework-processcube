@@ -5,6 +5,8 @@ from atlas_engine_client.core.api import UserTaskQuery
 
 from robot.api import logger
 
+from ._retry_helper import retry_on_exception
+
 
 class UserTaskKeyword:
 
@@ -15,6 +17,7 @@ class UserTaskKeyword:
         self._backoff_factor = kwargs.get('backoff_factor', 2)
         self._delay = kwargs.get('delay', 0.1)
 
+    @retry_on_exception
     def get_user_task_by(self, **kwargs):
 
         logger.debug(kwargs)
@@ -49,5 +52,6 @@ class UserTaskKeyword:
 
         return user_task
 
+    @retry_on_exception
     def finish_user_task(self, user_task_instance_id: str, payload: Dict[str, Any]):
         self._client.user_task_finish(user_task_instance_id, payload)
