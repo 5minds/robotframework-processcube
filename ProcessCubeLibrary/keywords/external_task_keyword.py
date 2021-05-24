@@ -7,12 +7,15 @@ from atlas_engine_client.core.api import FinishExternalTaskRequestPayload
 
 from robot.api import logger
 
+from ._retry_helper import retry_on_exception
+
 
 class ExternalTaskKeyword:
 
     def __init__(self, client, **kwargs):
         self._client = client
 
+    @retry_on_exception
     def get_external_task(self, topic: str, options: dict = {}):
 
         request = FetchAndLockRequestPayload(
@@ -49,6 +52,7 @@ class ExternalTaskKeyword:
 
         return external_task
 
+    @retry_on_exception
     def finish_external_task(self, external_task_id: str, result: Dict[str, Any]):
         request = FinishExternalTaskRequestPayload(
             worker_id=self._worker_id,
@@ -58,4 +62,3 @@ class ExternalTaskKeyword:
         logger.info(f"finish task with {request}")
 
         self._client.external_task_finish(external_task_id, request)
-

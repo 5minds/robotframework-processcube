@@ -6,12 +6,15 @@ from atlas_engine_client.core.api import MessageTriggerRequest
 
 from robot.api import logger
 
+from ._retry_helper import retry_on_exception
+
 
 class SendKeyword:
 
     def __init__(self, client, **kwargs):
         self._client = client
 
+    @retry_on_exception
     def send_message(self, message_name: str, payload: Dict[str, Any] = {}, **options):
 
         delay = options.get('delay', 0.2)
@@ -27,6 +30,7 @@ class SendKeyword:
 
         self._client.events_trigger_message(message_name, request)
 
+    @retry_on_exception
     def send_signal(self, signal_name, **options):
 
         delay = options.get("delay", 0.2)
