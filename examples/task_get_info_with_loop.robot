@@ -6,7 +6,7 @@ Library         ProcessCubeLibrary     engine_url=http://localhost:56100    work
 
 *** Tasks ***
 Check Loop Get Engine Info
-    FOR    ${counter}    IN RANGE    1    30
+    FOR    ${counter}    IN RANGE    1    10
         ${INFO}     Get Engine Info
         Log         ${counter}
         Sleep        0.5s
