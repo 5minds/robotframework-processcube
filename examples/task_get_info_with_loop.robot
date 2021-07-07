@@ -9,13 +9,6 @@ Check Loop Get Engine Info
     FOR    ${counter}    IN RANGE    1    30
         ${INFO}     Get Engine Info
         Log         ${counter}
-        Sleep        1s        
+        Sleep        0.5s
     END
 
-
-Check Loop Get Engine Info 2
-    FOR    ${counter}    IN RANGE    1    30
-        ${INFO}     GetEngineInfo
-        Log         ${counter}
-        Sleep        1s        
-    END
