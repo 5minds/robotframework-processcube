@@ -1,3 +1,4 @@
+import json
 import time
 from typing import Dict, Any
 
@@ -62,7 +63,14 @@ class ProcessInstanceKeyword:
 
         if result:
             payload = result.tokens[0]['payload']
+            if payload is not None:
+                try:
+                    payload = json.loads(payload)
+                except json.decoder.JSONDecodeError:
+                    payload = {}
         else:
             payload = {}
+
+        logger.info(f"type(payload) {type(payload)}")
 
         return payload
