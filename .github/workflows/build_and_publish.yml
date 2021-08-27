@@ -7,7 +7,7 @@ on:
       - beta
       - develop
 env:
-  CI_TOOLS_VERSION: "3.3.0"
+  CI_TOOLS_VERSION: "3.3.0-hotfix-3f9b8b-ksu8rn33"
 
 jobs:
   get_version:
