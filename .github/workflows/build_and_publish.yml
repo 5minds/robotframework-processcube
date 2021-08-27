@@ -7,7 +7,7 @@ on:
       - beta
       - develop
 env:
-  CI_TOOLS_VERSION: "3.2.0"
+  CI_TOOLS_VERSION: "3.3.0"
 
 jobs:
   get_version:
