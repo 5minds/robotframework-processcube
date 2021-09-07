@@ -12,6 +12,8 @@ Library         ProcessCubeLibrary     engine_url=http://localhost:56100    work
 #Library          ProcessCubeLibrary    self_hosted_engine=docker    worker_id=my worker    docker_options=${DOCKER_OPTIONS}
 #Suite Teardown   Engine Shutdown 
 
+Metadata    RequirementsID    4612
+
 *** Keywords ***
 Deploy a process
     Deploy Processmodel      _hello_robot_framework.bpmn
@@ -19,6 +21,7 @@ Deploy a process
 
 *** Tasks ***
 Check Exception on deploy
+    [Tags]    RequirementsID=4612
     ${msg}=    Run Keyword And Expect Error    *    Deploy a process
     Log    ${msg}
     Should Contain    ${msg}    _hello_robot_framework.bpmn
