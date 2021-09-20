@@ -1,3 +1,4 @@
+import json
 import time
 from typing import Dict, Any
 
@@ -5,6 +6,8 @@ from atlas_engine_client.core.api import FlowNodeInstancesQuery
 from atlas_engine_client.core.api import FlowNodeInstanceResponse
 
 from robot.api import logger
+
+from ._retry_helper import retry_on_exception
 
 
 class ProcessInstanceKeyword:
@@ -16,6 +19,7 @@ class ProcessInstanceKeyword:
         self._backoff_factor = kwargs.get('backoff_factor', 2)
         self._delay = kwargs.get('delay', 0.1)
 
+    @retry_on_exception
     def get_processinstance(self, **kwargs) -> FlowNodeInstanceResponse:
 
         query_dict = {
@@ -53,12 +57,20 @@ class ProcessInstanceKeyword:
 
         return flow_node_instance
 
+    @retry_on_exception
     def get_processinstance_result(self, **kwargs) -> Dict[str, Any]:
         result = self.get_processinstance(**kwargs)
 
         if result:
             payload = result.tokens[0]['payload']
+            if payload is not None:
+                try:
+                    payload = json.loads(payload)
+                except json.decoder.JSONDecodeError:
+                    payload = {}
         else:
             payload = {}
+
+        logger.info(f"type(payload) {type(payload)}")
 
         return payload

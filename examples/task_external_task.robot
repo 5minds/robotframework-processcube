@@ -16,7 +16,7 @@ Get engine info task
 
 *** Tasks ***
 Deploy a process
-    Deploy Processmodel      hello_robot_framework.bpmn
+    Deploy Processmodel      examples/hello_robot_framework.bpmn
 
 
 *** Tasks ***

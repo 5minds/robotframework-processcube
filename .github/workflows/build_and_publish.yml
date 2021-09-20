@@ -1,9 +1,13 @@
-name: Node CI
+name: Robotframework ProcessCube
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - master
+      - beta
+      - develop
 env:
-  CI_TOOLS_VERSION: "3.2.0"
+  CI_TOOLS_VERSION: "3.3.0-hotfix-3f9b8b-ksu8rn33"
 
 jobs:
   get_version:
@@ -87,9 +91,50 @@ jobs:
         run: |
           twine upload dist/*
 
-  create_release:
+  build_docker:
     runs-on: [self-hosted, k8s.5minds.cloud]
     needs: [get_version, build_and_publish]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Get version from common step
+        run: |
+          echo "VERSION=${{ needs.get_version.outputs.VERSION }}" >> $GITHUB_ENV
+          echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
+
+      - name: Build Docker Image for backend
+        run: |
+          docker build \
+            --tag 5minds/robotframework-processcube:$VERSION .
+
+      - name: Tag master Release Docker Image for backend
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker tag 5minds/robotframework-processcube:$VERSION 5minds/robotframework-processcube:latest
+          docker tag 5minds/robotframework-processcube:$VERSION 5minds/robotframework-processcube:$MAJOR_VERSION
+
+      - name: Show Docker Images
+        run: docker images
+
+      - name: Login to Docker
+        run: echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Push Docker Image
+        run: docker push 5minds/robotframework-processcube:$VERSION
+
+      - name: Push Docker Images for master release
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker push 5minds/robotframework-processcube:latest
+          docker push 5minds/robotframework-processcube:$MAJOR_VERSION
+
+  create_release:
+    runs-on: [self-hosted, k8s.5minds.cloud]
+    needs: [get_version, build_and_publish, build_docker]
 
     steps:
       - uses: actions/checkout@v1
