@@ -17,6 +17,12 @@ Um Tests auf Basis der [Robot Framework](https://robotframework.org/) für die B
 - 5Minds-Studio in der stabilen Version ist installiert
 - 5Minds-Studio ist gestartet
 - 5Minds-Engine ist durch das Studio auf dem Port `51000`gestartet
+
+Alternative kann Docker für die 5Minds-Engine verwendet werden, dann sind folgende Vorausetzungen notwendig:
+- Docker-Desktop ist installiert und gestartet
+- Zugang zum Internet für den Download des Image [5minds/atlas_engine_fullstack_server](https://hub.docker.com/r/5minds/atlas_engine_fullstack_server)
+
+Für die Ausführung von Tests ist dann noch folgende Voraussetzung notwendig:
 - Python in der Version `>=3.7.x` ist installiert und im Pfad konfiguriert
 - Robot-Framework für die 5Minds-Engine ist installiert `pip install robotframework-processcube`
 
@@ -28,20 +34,33 @@ Um die *Keywords* für die Interaktion mit der 5Minds-Engine verwenden zu könne
 Library ProcessCubeLibrary einzubinden und die URL für die Engine mit dem Paramter `engine_url` 
 zu konfiguieren, dies ist für die stabile Version der Studio-Engine `http://localhost:56000`.
 
+Mit dem 5Minds-Studio ist folgende Verwendung zu verwenden.
 ```robotframework
 *** Settings ***
 Library         ProcessCubeLibrary     engine_url=http://localhost:56000
 
 ```
 
+Für die weiteren Beispiele wird Docker verwendet und dann ist folgende Einstellung zu ändern:
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+```
+
 ### BPMN-Datei installieren
 
-Zuerst ist ein BPMN-Diagram (z.B. `examples/hello_minimal.bpmn`) zu erstellen.
+Zuerst ist ein BPMN-Diagram (z.B. `processes/hello_minimal.bpmn`) zu erstellen.
 
 
 ```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+
 *** Settings ***
-Library         ProcessCubeLibrary     engine_url=http://localhost:56000
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
 
 *** Tasks ***
 Successfully deploy
