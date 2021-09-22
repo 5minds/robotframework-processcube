@@ -9,14 +9,14 @@
   * [Umgang mit Benutzer-Task (User-Task)](#umgang-mit-benutzer-task-user-task)
   * [Umgang mit Ereignissen (Events)](#umgang-mit-ereignissen-events)
     + [Signale](#signale)
-    + [Nachrichten (Messages)](#nachrichten-messages
+    + [Nachrichten (Messages)](#nachrichten-messages)
 ## Voraussetzung
 
 Um Tests auf Basis der [Robot Framework](https://robotframework.org/) für die BPMN-basierte-Workflowengine
 [5Minds-Engine](https://www.5minds.de/processcube/) zu erstellen, sind folgende Voraussetzung erforderlich:
 - 5Minds-Studio in der stabilen Version ist installiert
 - 5Minds-Studio ist gestartet
-- 5Minds-Engine ist durch das Studio auf dem Port `51000`gestartet
+- 5Minds-Engine ist durch das Studio auf dem Port `56000`gestartet
 
 Alternative kann Docker für die 5Minds-Engine verwendet werden, dann sind folgende Vorausetzungen notwendig:
 - Docker-Desktop ist installiert und gestartet
@@ -31,8 +31,10 @@ Für die Bearbeitung ist [VS Code](https://code.visualstudio.com/) und der [Robo
 ## Verwendung
 
 Um die *Keywords* für die Interaktion mit der 5Minds-Engine verwenden zu können, ist die 
-Library ProcessCubeLibrary einzubinden und die URL für die Engine mit dem Paramter `engine_url` 
-zu konfiguieren, dies ist für die stabile Version der Studio-Engine `http://localhost:56000`.
+Library ProcessCubeLibrary einzubinden.
+Für die Verwendung mit dem 5Minds-Studio (ohne Docker) ist die URL für die Engine mit
+dem Paramter `engine_url` zu konfiguieren, dies ist für die stabile Version der
+Studio-Engine `http://localhost:56000`.
 
 Mit dem 5Minds-Studio ist folgende Verwendung zu verwenden.
 ```robotframework
@@ -49,6 +51,9 @@ Für die weiteren Beispiele wird Docker verwendet und dann ist folgende Einstell
 *** Settings ***
 Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
 ```
+
+Die Engine im Docker-Container wird standardmäßig mit dem Port `55000` gestartet. Die URL zum
+Einbinden ins Studio ist also `http://localhost:55000`.
 
 ### BPMN-Datei installieren
 
