@@ -2,14 +2,15 @@
 
 - [Voraussetzung](#voraussetzung)
 - [Verwendung](#verwendung)
-  * [BPMN-Datei installieren](#bpmn-datei-installieren)
+  * [BPMN-Datei in 5Minds-Engine laden](#bpmn-datei-in-5minds-engine-laden)
   * [Prozessmodell starten](#prozessmodell-starten)
   * [Ergebnisse von beendeten Prozessen abfragen](#ergebnisse-von-beendeten-prozessen-abfragen)
   * [Umgang mit External-Tasks](#umgang-mit-external-tasks)
   * [Umgang mit Benutzer-Task (User-Task)](#umgang-mit-benutzer-task-user-task)
   * [Umgang mit Ereignissen (Events)](#umgang-mit-ereignissen-events)
     + [Signale](#signale)
-    + [Nachrichten (Messages)](#nachrichten-messages)
+    + [Nachrichten (Messages)](#nachrichten-messages)    
+
 ## Voraussetzung
 
 Um Tests auf Basis der [Robot Framework](https://robotframework.org/) für die BPMN-basierte-Workflowengine
@@ -55,10 +56,11 @@ Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_optio
 Die Engine im Docker-Container wird standardmäßig mit dem Port `55000` gestartet. Die URL zum
 Einbinden ins Studio ist also `http://localhost:55000`.
 
-### BPMN-Datei installieren
+### BPMN-Datei in 5Minds-Engine laden
 
-Zuerst ist ein BPMN-Diagram (z.B. `processes/hello_minimal.bpmn`) zu erstellen.
+Zuerst ist ein BPMN-Diagram (z.B. [`processes/hello_minimal.bpmn`](processes/hello_minimal.bpmn) zu erstellen.
 
+Mit dem Keyword `Deploy Processmodel` und der Angabe des Dateipfades wird das BPMN-Diagram in die 5Minds-Engine geladen.
 
 ```robotframework
 *** Variables ***
@@ -73,6 +75,27 @@ Successfully deploy
 ```
 
 ### Prozessmodell starten
+
+Wie unter [BPMN-Datei in 5Minds-Engine laden](#bpmn-datei-in-5minds-engine-laden) beschrieben, muss die BPMN-Datei
+vorhanden sein.
+
+Mit dem Keyword `Start Processmodel` und der Angabe der Process ID `hello_minimal` wird eine Prozessinstanz gestartet.
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library    Process
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_minimal.bpmn
+
+Start process model
+    Start Processmodel     hello_minimal
+```
 
 ### Ergebnisse von beendeten Prozessen abfragen
 
