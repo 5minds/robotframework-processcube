@@ -5,12 +5,15 @@
   * [BPMN-Datei in 5Minds-Engine laden](#bpmn-datei-in-5minds-engine-laden)
   * [Prozessmodell starten](#prozessmodell-starten)
   * [Ergebnisse von beendeten Prozessen abfragen](#ergebnisse-von-beendeten-prozessen-abfragen)
-  * [Umgang mit External-Tasks](#umgang-mit-external-tasks)
-  * [Umgang mit Benutzer-Task (User-Task)](#umgang-mit-benutzer-task-user-task)
+  * [Verarbeiten von Aktivitäten](#verarbeiten-von-aktivitaten)
+    + [Umgang mit External-Tasks](#umgang-mit-external-tasks)
+    + [Umgang mit Benutzer-Tasks (User-Tasks)](#umgang-mit-benutzer-tasks-user-tasks)
+    + [Umgang mit manuellen Tasks (Manual-Tasks)](#umgang-mit-manuellen-tasks-manual-tasks)
+    + [Umgang mit untypisierten Tasks (Empty-Tasks)](#umgang-mit-untypisierten-tasks-empty-tasks)
   * [Umgang mit Ereignissen (Events)](#umgang-mit-ereignissen-events)
     + [Signale](#signale)
-    + [Nachrichten (Messages)](#nachrichten-messages)    
-
+    + [Nachrichten (Messages)](#nachrichten-messages)
+    
 ## Voraussetzung
 
 Um Tests auf Basis der [Robot Framework](https://robotframework.org/) für die BPMN-basierte-Workflowengine
@@ -99,9 +102,44 @@ Start process model
 
 ### Ergebnisse von beendeten Prozessen abfragen
 
-### Umgang mit External-Tasks
+Nachdem der Prozess gestartet wurde, kann mit dem Keyword `Get Processinstance Result` das Ergebnis
+der Prozessinstanz abgefragt werden.
 
-### Umgang mit Benutzer-Task (User-Task)
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_minimal.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_minimal    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
+
+### Verarbeiten von Aktivitäten
+
+#### Umgang mit External-Tasks
+
+#### Umgang mit Benutzer-Tasks (User-Tasks)
+
+#### Umgang mit manuellen Tasks (Manual-Tasks)
+
+#### Umgang mit untypisierten Tasks (Empty-Tasks)
 
 ### Umgang mit Ereignissen (Events)
 
