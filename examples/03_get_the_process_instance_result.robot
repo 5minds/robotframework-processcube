@@ -18,7 +18,7 @@ Start process model
     Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
     Log                      ${CORRELATION}
 
-Get the of a process instance
+Get the process instance
     ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
     Log                      ${RESULT}
     
