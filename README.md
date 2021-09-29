@@ -302,7 +302,81 @@ Get the process instance
 
 ### Umgang mit Ereignissen (Events)
 
+Beim Umgang mit Ereignissen, muss zwischen Signalen und Nachrichten unterschieden werden.
+
 #### Signale
+
+Um mit Ereignissen der BPMN-Module zu interagieren, muss die BPMN-Datei 
+`hello_signal.bpmn` verwendet werden.
+
+Das Keyword für das Auslösen von Signale ist `Send Signal`.
+
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_signal.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_signal    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Send Signal
+    Send Signal              catch_signal                           delay=0.2     
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
 
 #### Nachrichten (Messages)
 
+Um mit Ereignissen der BPMN-Module zu interagieren, muss die BPMN-Datei 
+`hello_message.bpmn` verwendet werden.
+
+Das Keyword für das Auslösen von Signale ist `Send Message`.
+
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_message.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_message    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Send Message
+    &{PAYLOAD}=              Create Dictionary        message_field1=Value field 1    message_field2=Value field 2
+    Send Message             catch_message            ${PAYLOAD}                      delay=0.5
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
