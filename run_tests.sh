@@ -2,6 +2,6 @@
 
 #PYTHONPATH=. robot --loglevel=DEBUG --outputdir=examples examples/*.robot
 
-PYTHONPATH=. robot --outputdir=examples examples/*.robot
+PYTHONPATH=. robot --outputdir=tests tests/0*.robot
 
-open examples/report.html
+#open examples/report.html
