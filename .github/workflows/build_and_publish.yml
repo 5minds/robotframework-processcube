@@ -65,6 +65,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
+      
+      - name: Run tests
+        run: docker-compose -f docker-compose.tests.yaml up --build  --exit-code-from robot
 
       - name: Install dependencies
         # "setuptools>=46.1.0" is required for "setuptools.sic()"
