@@ -6,6 +6,7 @@ on:
       - master
       - beta
       - develop
+      - feature/*
 env:
   CI_TOOLS_VERSION: "3.3.0-hotfix-3f9b8b-ksu8rn33"
 
