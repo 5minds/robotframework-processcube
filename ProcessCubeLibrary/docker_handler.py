@@ -15,12 +15,10 @@ class DockerHandler:
     def __init__(self, **kwargs):
 
         params = {
-            'base_url': 'unix://var/run/docker.sock',
             'timeout': 120
         }
 
-        self._client = docker.DockerClient(**params)
-        self._api_client = docker.APIClient(**params)
+        self._client = docker.from_env(**params)
         self._name = kwargs.get(
             'container_name', 'robotframework_5minds-engine')
         self._auto_remove = str2bool(kwargs.get('auto_remove', True))
@@ -47,10 +45,11 @@ class DockerHandler:
 
         time.sleep(float(self._delay))
 
-        attr = self._api_client.inspect_container(self._container.id)
-        key = list(attr['NetworkSettings']['Ports'].keys())[0]
+        container = self._client.containers.get(self._container.id)
 
-        self._port = attr['NetworkSettings']['Ports'][key][0]['HostPort']
+        key = list(container.attrs['NetworkSettings']['Ports'].keys())[0]
+
+        self._port = container.attrs['NetworkSettings']['Ports'][key][0]['HostPort']
 
         logger.console(f"Starting engine within a docker container '{self._image_name}' ... done")
 
