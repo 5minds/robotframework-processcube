@@ -2,14 +2,18 @@
 
 - [Voraussetzung](#voraussetzung)
 - [Verwendung](#verwendung)
-  * [BPMN-Datei installieren](#bpmn-datei-installieren)
+  * [BPMN-Datei in 5Minds-Engine laden](#bpmn-datei-in-5minds-engine-laden)
   * [Prozessmodell starten](#prozessmodell-starten)
   * [Ergebnisse von beendeten Prozessen abfragen](#ergebnisse-von-beendeten-prozessen-abfragen)
-  * [Umgang mit External-Tasks](#umgang-mit-external-tasks)
-  * [Umgang mit Benutzer-Task (User-Task)](#umgang-mit-benutzer-task-user-task)
+  * [Verarbeiten von Aktivitäten](#verarbeiten-von-aktivitaten)
+    + [Umgang mit External-Tasks](#umgang-mit-external-tasks)
+    + [Umgang mit Benutzer-Tasks (User-Tasks)](#umgang-mit-benutzer-tasks-user-tasks)
+    + [Umgang mit manuellen Tasks (Manual-Tasks)](#umgang-mit-manuellen-tasks-manual-tasks)
+    + [Umgang mit untypisierten Tasks (Empty-Tasks)](#umgang-mit-untypisierten-tasks-empty-tasks)
   * [Umgang mit Ereignissen (Events)](#umgang-mit-ereignissen-events)
     + [Signale](#signale)
     + [Nachrichten (Messages)](#nachrichten-messages)
+    
 ## Voraussetzung
 
 Um Tests auf Basis der [Robot Framework](https://robotframework.org/) für die BPMN-basierte-Workflowengine
@@ -55,10 +59,11 @@ Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_optio
 Die Engine im Docker-Container wird standardmäßig mit dem Port `55000` gestartet. Die URL zum
 Einbinden ins Studio ist also `http://localhost:55000`.
 
-### BPMN-Datei installieren
+### BPMN-Datei in 5Minds-Engine laden
 
-Zuerst ist ein BPMN-Diagram (z.B. `processes/hello_minimal.bpmn`) zu erstellen.
+Zuerst ist ein BPMN-Diagram (z.B. [`processes/hello_minimal.bpmn`](processes/hello_minimal.bpmn) zu erstellen.
 
+Mit dem Keyword `Deploy Processmodel` und der Angabe des Dateipfades wird das BPMN-Diagram in die 5Minds-Engine geladen.
 
 ```robotframework
 *** Variables ***
@@ -74,15 +79,304 @@ Successfully deploy
 
 ### Prozessmodell starten
 
+Wie unter [BPMN-Datei in 5Minds-Engine laden](#bpmn-datei-in-5minds-engine-laden) beschrieben, muss die BPMN-Datei
+vorhanden sein.
+
+Mit dem Keyword `Start Processmodel` und der Angabe der Process ID `hello_minimal` wird eine Prozessinstanz gestartet.
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library    Process
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_minimal.bpmn
+
+Start process model
+    Start Processmodel     hello_minimal
+```
+
 ### Ergebnisse von beendeten Prozessen abfragen
 
-### Umgang mit External-Tasks
+Nachdem der Prozess gestartet wurde, kann mit dem Keyword `Get Processinstance Result` das Ergebnis
+der Prozessinstanz abgefragt werden.
 
-### Umgang mit Benutzer-Task (User-Task)
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_minimal.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_minimal    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
+
+### Verarbeiten von Aktivitäten
+
+#### Umgang mit untypisierten Tasks (Empty-Tasks)
+
+Um bei der Entwicklung von Aktivitäten mit noch untypisierten Tasks 
+zu beginnen, stehen die Keywords `Get Empty Task By` fürs Laden und 
+`Finish Empty Task` zum Abschließen zur Verfügung.
+
+Für diesen Test wird eine andere BPMN-Datei verwendet `hello_empty_task.bpmn`.
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_empty_task.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_empty_task    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Handle empty task by correlation_id
+    Log                      ${CORRELATION}
+    ${EMPTY_TASK}            Get Empty Task By                     correlation_id=${CORRELATION}
+    Log                      ${EMPTY_TASK.empty_task_instance_id}
+    Finish Empty Task        ${EMPTY_TASK.empty_task_instance_id}
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
+
+#### Umgang mit manuellen Tasks (Manual-Tasks)
+
+Als Basis für den Umgang mit manuellen Task wird die BPMN-Datei 
+`hello_manual_task.bpmn` benötigt.
+
+Für das Laden vom manuellen Taak dient das Keyword `Get Manual Task By` und 
+für das Beenden `Finish Manual Task`.
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_manual_task.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_manual_task    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Handle manual task by correlation_id
+    Log                      ${CORRELATION}
+    ${MANUAL_TASK}           Get Manual Task By                     correlation_id=${CORRELATION}
+    Log                      ${MANUAL_TASK.manual_task_instance_id}
+    Finish Manual Task       ${MANUAL_TASK.manual_task_instance_id}
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
+
+#### Umgang mit Benutzer-Tasks (User-Tasks)
+
+Um den Umgang mit Benutzer-Task zu testen ist die BPMN-Datei `hello_user_task.bpmn` notwendig.
+
+Mit dem Keyword `Get User Task By` können User-Tasks geladen und 
+mit dem Keyword `Finish User Task` beendet werden.
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_user_task.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_user_task    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Handle User Task by correlation_id
+    Log                      ${CORRELATION}
+    ${USER_TASK}             Get User Task By                      correlation_id=${CORRELATION}
+    Log                      ${USER_TASK}
+    Should Not Be Empty      ${USER_TASK.user_task_instance_id}
+    Should Be Equal          ${USER_TASK.process_model_id}         hello_user_task
+
+    &{ANSWER}=               Create Dictionary                     field_01=from user task    
+    Finish User Task         ${USER_TASK.user_task_instance_id}    ${ANSWER}
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
+
+#### Umgang mit External-Tasks
+
+Um den Umgang mit External-Task zu testen ist die BPMN-Datei `hello_external_task.bpmn` notwendig.
+
+Mit dem Keyword `Get External Task` können User-Tasks geladen und 
+mit dem Keyword `Finish External Task` beendet werden.
+
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_external_task.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_external_task    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Handle External Task
+    ${TASK}                  Get External Task                     topic=doExternal
+    &{ANSWER}=               Create Dictionary                     external_field_01=The Value of field 1
+    Log                      ${TASK.id}
+    Finish External Task     ${TASK.id}                            ${ANSWER}
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
 
 ### Umgang mit Ereignissen (Events)
 
+Beim Umgang mit Ereignissen, muss zwischen Signalen und Nachrichten unterschieden werden.
+
 #### Signale
+
+Um mit Ereignissen der BPMN-Module zu interagieren, muss die BPMN-Datei 
+`hello_signal.bpmn` verwendet werden.
+
+Das Keyword für das Auslösen von Signale ist `Send Signal`.
+
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_signal.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_signal    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Send Signal
+    Send Signal              catch_signal                           delay=0.2     
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```
 
 #### Nachrichten (Messages)
 
+Um mit Ereignissen der BPMN-Module zu interagieren, muss die BPMN-Datei 
+`hello_message.bpmn` verwendet werden.
+
+Das Keyword für das Auslösen von Signale ist `Send Message`.
+
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+${CORRELATION}               -1
+
+
+*** Settings ***
+Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}
+Library         Collections
+
+
+*** Tasks ***
+Successfully deploy
+    Deploy Processmodel    processes/hello_message.bpmn
+
+Start process model
+    &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_message    ${PAYLOAD}
+    Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
+    Log                      ${CORRELATION}
+
+Send Message
+    &{PAYLOAD}=              Create Dictionary        message_field1=Value field 1    message_field2=Value field 2
+    Send Message             catch_message            ${PAYLOAD}                      delay=0.5
+
+
+Get the process instance
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    Log                      ${RESULT}
+```

@@ -49,11 +49,8 @@ class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
         elif self_hosted_engine == 'docker':
             docker_options = kwargs.get('docker_options', {})
 
-            logger.console(f"Starting engine within a docker container ...")
             self._docker_handler = DockerHandler(**docker_options)
             self._docker_handler.start()
-            logger.console(
-                f"Starting engine within a docker container ... done")
 
             engine_url = self._docker_handler.get_engine_url()
 
