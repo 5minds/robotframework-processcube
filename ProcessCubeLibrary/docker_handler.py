@@ -1,6 +1,8 @@
 import docker
 import time
 
+from robot.api import logger
+
 
 def str2bool(v):
     return v.lower() in ("yes", "true", "t", "1")
@@ -8,25 +10,25 @@ def str2bool(v):
 
 class DockerHandler:
 
-    IMAGE_NAME = '5minds/atlas_engine_fullstack_server'
+    IMAGE_NAME = '5minds/engine'
 
     def __init__(self, **kwargs):
 
         params = {
-            'base_url': 'unix://var/run/docker.sock',
             'timeout': 120
         }
 
-        self._client = docker.DockerClient(**params)
-        self._api_client = docker.APIClient(**params)
+        self._client = docker.from_env(**params)
         self._name = kwargs.get(
-            'container_name', 'robotframework_processcube-engine')
+            'container_name', 'robotframework_5minds-engine')
         self._auto_remove = str2bool(kwargs.get('auto_remove', True))
         self._image_name = kwargs.get('image_name', DockerHandler.IMAGE_NAME)
 
         self._delay = kwargs.get('delay', 5.0)
 
     def start(self):
+        logger.console(f"Starting engine within a docker container '{self._image_name}' ...")
+
         args = {
             'detach': True,
             'publish_all_ports': True,
@@ -43,10 +45,14 @@ class DockerHandler:
 
         time.sleep(float(self._delay))
 
-        attr = self._api_client.inspect_container(self._container.id)
-        key = list(attr['NetworkSettings']['Ports'].keys())[0]
+        container = self._client.containers.get(self._container.id)
 
-        self._port = attr['NetworkSettings']['Ports'][key][0]['HostPort']
+        key = list(container.attrs['NetworkSettings']['Ports'].keys())[0]
+
+        self._port = container.attrs['NetworkSettings']['Ports'][key][0]['HostPort']
+
+        logger.console(f"Starting engine within a docker container '{self._image_name}' ... done")
+
 
     def get_engine_url(self):
         engine_url = f"http://localhost:{self._port}"

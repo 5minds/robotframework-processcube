@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  robot:
+    image: 5minds/robotframework-processcube
+    build:
+      context: .
+      dockerfile: Dockerfile.tests
+    network_mode: "host"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
