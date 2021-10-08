@@ -65,12 +65,15 @@ class ProcessInstanceKeyword:
             payload = result.tokens[0]['payload']
             if payload is not None:
                 try:
-                    payload = json.loads(payload)
+                    logger.info(f"type(payload) {type(payload)}")
+                    if type(payload) in [str, bytes]:
+                        payload = json.loads(payload)
+                    else:
+                        pass
                 except json.decoder.JSONDecodeError:
                     payload = {}
         else:
             payload = {}
 
-        logger.info(f"type(payload) {type(payload)}")
 
         return payload
