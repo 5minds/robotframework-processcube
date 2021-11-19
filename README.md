@@ -2,6 +2,7 @@
 
 - [Voraussetzung](#voraussetzung)
 - [Verwendung](#verwendung)
+  * [Info von der 5Minds-Engine abrufen](#info-von-der-5minds-engine-abrufen)
   * [BPMN-Datei in 5Minds-Engine laden](#bpmn-datei-in-5minds-engine-laden)
   * [Prozessmodell starten](#prozessmodell-starten)
   * [Ergebnisse von beendeten Prozessen abfragen](#ergebnisse-von-beendeten-prozessen-abfragen)
@@ -58,6 +59,33 @@ Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_optio
 
 Die Engine im Docker-Container wird standardmäßig mit dem Port `55000` gestartet. Die URL zum
 Einbinden ins Studio ist also `http://localhost:55000`.
+
+### Info von der 5Minds-Engine abrufen
+
+Um zwei verschiedene Engines gleichzeitig verwenden zu können, kann die Verwendung der Library mit `WITH NAME <ein Name>`
+benannt werden. Danach ist die Verwendung der Keywords mit einem entsprechenenden Namen zu konkretisieren.
+
+Im folgenden Beispiel wird `Get Engine Info` einmal für die `Engine01` und einmal für die `Engine02` abgerufen.
+
+```robotframework
+*** Variables ***
+&{DOCKER_OPTIONS}            auto_remove=False
+
+*** Settings ***
+Library         ProcessCubeLibrary    self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}    WITH NAME    Engine01
+Library         ProcessCubeLibrary    self_hosted_engine=docker    docker_options=${DOCKER_OPTIONS}    WITH NAME    Engine02
+
+*** Tasks ***
+Engine info from Engine01
+    ${INFO}=    Engine01.Get Engine Info
+    Log    ${INFO}
+
+
+Engine info from Engine02
+    ${INFO}=    Engine02.Get Engine Info
+    Log    ${INFO}
+```
+
 
 ### BPMN-Datei in 5Minds-Engine laden
 
