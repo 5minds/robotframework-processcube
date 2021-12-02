@@ -1,4 +1,4 @@
-atlas-engine-client==2.0.2a1
+atlas-engine-client==2.0.2
 docker==5.0.3
 requests==2.26.0
 robotframework>=4.1.2
