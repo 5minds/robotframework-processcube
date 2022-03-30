@@ -4,6 +4,7 @@ WORKDIR /robot
 
 RUN pip install --upgrade pip
 
-RUN pip install robotframework robotframework-jsonlibrary robotframework-processcube
+# @Robin mach' hinne
+RUN pip install robotframework robotframework-jsonlibrary robotframework-processcube==1.3.5
 
 CMD robot **/*.robot
