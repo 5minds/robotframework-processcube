@@ -34,8 +34,14 @@ class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
         self._worker_id = kwargs.get('worker_id', "robot_framework")
 
         self._client = self._create_client(**kwargs)
+        self._kwargs = kwargs
+
 
         super(ProcessCubeLibrary, self).__init__(self._client, **kwargs)
+
+    def log_start_parameters(self):
+        kwargs_repr = [f"{k}={v!r}" for k, v in self._kwargs.items()]
+        logger.info(f"start library with kwargs {kwargs_repr}")
 
     def _create_client(self, **kwargs):
         engine_url = kwargs.get('engine_url', None)

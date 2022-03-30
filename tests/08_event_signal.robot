@@ -19,7 +19,7 @@ Start process model
     Log                      ${CORRELATION}
 
 Send Signal
-    Send Signal              catch_signal                           delay=0.2     
+    Send Signal              catch_signal                           delay=0.2
 
 
 Get the process instance
