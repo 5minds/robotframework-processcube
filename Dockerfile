@@ -1,10 +1,11 @@
 FROM python:3
 
+ARG PROCESS_CUBE_LIBRARY_VERSION
+
 WORKDIR /robot
 
 RUN pip install --upgrade pip
 
-# @Robin mach' hinne
-RUN pip install robotframework robotframework-jsonlibrary robotframework-processcube==1.3.6
+RUN pip install robotframework robotframework-jsonlibrary robotframework-processcube==${PROCESS_CUBE_LIBRARY_VERSION}
 
 CMD robot **/*.robot
