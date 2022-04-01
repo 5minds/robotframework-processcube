@@ -109,7 +109,7 @@ jobs:
       - name: Build Docker Image for backend
         run: |
           docker build \
-            --tag 5minds/robotframework-processcube:$VERSION .
+            --tag 5minds/robotframework-processcube:$VERSION --build-arg PROCESS_CUBE_LIBRARY_VERSION=$VERSION  .
 
       - name: Tag master Release Docker Image for backend
         if: github.ref == 'refs/heads/master'
