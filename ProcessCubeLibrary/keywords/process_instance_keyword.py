@@ -42,7 +42,7 @@ class ProcessInstanceKeyword:
             if len(flow_node_instances) == 1:
                 flow_node_instance = flow_node_instances[0]
             else:
-                flow_node_instance = {}
+                flow_node_instance = None
 
             if flow_node_instance:
                 break
