@@ -61,7 +61,7 @@ class ProcessInstanceKeyword:
     def get_processinstance_result(self, **kwargs) -> Dict[str, Any]:
         result = self.get_processinstance(**kwargs)
 
-        if result:
+        if result and len(result.tokens) > 0:
             payload = result.tokens[0]['payload']
             if payload is not None:
                 try:
