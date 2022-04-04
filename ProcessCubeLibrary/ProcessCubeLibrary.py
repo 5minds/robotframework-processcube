@@ -1,4 +1,5 @@
 import time
+from urllib3.exceptions import NewConnectionError
 
 from atlas_engine_client.core.api import Client
 
@@ -65,6 +66,7 @@ class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
             self._docker_handler.start()
 
             engine_url = self._docker_handler.get_engine_url()
+            #engine_url = "http://localhost:1234"
 
             logger.console(f"Connecting to engine '{engine_url}'.")
             client = Client(engine_url)
@@ -82,7 +84,7 @@ class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
             
                 return value
                 
-            except ConnectionError as e:
+            except Exception as e:
                 time.sleep(1)
                 current_retry = current_retry + 1
                 
