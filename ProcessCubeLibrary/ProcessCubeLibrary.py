@@ -78,7 +78,7 @@ class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
         current_retry = 0
         while True:
             try:
-                value = self.get_engine_info()
+                value = self._client.info()
             
                 return value
                 
