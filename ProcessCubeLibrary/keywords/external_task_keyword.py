@@ -16,7 +16,7 @@ class ExternalTaskKeyword:
         self._client = client
 
     @retry_on_exception
-    def get_external_task(self, topic: str, options: dict = {}):
+    def get_external_task(self, topic: str, options: dict = {}, **kwargs):
 
         request = FetchAndLockRequestPayload(
             worker_id=self._worker_id,
@@ -53,7 +53,7 @@ class ExternalTaskKeyword:
         return external_task
 
     @retry_on_exception
-    def finish_external_task(self, external_task_id: str, result: Dict[str, Any]):
+    def finish_external_task(self, external_task_id: str, result: Dict[str, Any], **kwargs):
         request = FinishExternalTaskRequestPayload(
             worker_id=self._worker_id,
             result=result

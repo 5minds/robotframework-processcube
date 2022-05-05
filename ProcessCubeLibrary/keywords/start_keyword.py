@@ -11,7 +11,7 @@ class StartKeyword:
         self._client = client
 
     @retry_on_exception
-    def start_processmodel_and_wait(self, process_model, payload={}):
+    def start_processmodel_and_wait(self, process_model, payload={}, **kwargs):
         request = ProcessStartRequest(
             process_model_id=process_model,
             initial_token=payload,
@@ -23,7 +23,7 @@ class StartKeyword:
         return result
 
     @retry_on_exception
-    def start_processmodel(self, process_model, payload={}):
+    def start_processmodel(self, process_model, payload={}, **kwargs):
 
         request = ProcessStartRequest(
             process_model_id=process_model,

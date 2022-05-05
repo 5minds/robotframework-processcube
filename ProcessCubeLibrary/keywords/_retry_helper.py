@@ -25,6 +25,17 @@ def retry_on_exception(func):
         logger.debug(f"_backoff_factor: {backoff_factor}")
         logger.debug(f"_delay: {current_delay}")
         
+
+        # delete the max_retries, delay and backoff_factor from the kwargs
+        if 'max_retries' in kwargs:
+            del kwargs['max_retries']
+
+        if 'delay' in kwargs:
+            del kwargs['delay']
+
+        if 'backoff_factor' in kwargs:
+            del kwargs['backoff_factor']
+
         while True:
             try:
                 value = func(self, *args, **kwargs)

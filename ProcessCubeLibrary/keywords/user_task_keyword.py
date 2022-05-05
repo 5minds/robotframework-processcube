@@ -53,5 +53,5 @@ class UserTaskKeyword:
         return user_task
 
     @retry_on_exception
-    def finish_user_task(self, user_task_instance_id: str, payload: Dict[str, Any]):
+    def finish_user_task(self, user_task_instance_id: str, payload: Dict[str, Any], **kwargs):
         self._client.user_task_finish(user_task_instance_id, payload)

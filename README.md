@@ -60,6 +60,15 @@ Library         ProcessCubeLibrary     self_hosted_engine=docker    docker_optio
 Die Engine im Docker-Container wird standardmäßig mit dem Port `55000` gestartet. Die URL zum
 Einbinden ins Studio ist also `http://localhost:55000`.
 
+
+### Allgmeine Informationen
+
+Um den Aufruf der nachfolgenden Keywords gegenüber Fehlern etwas robuster zu gestalten, kann global oder bei jeden Keyword
+gesteuert werden:
+- max_retries: Anzahl der Wiederholungen, bevor ein Keyword abgebrochen wird.
+- delay: Verzögerung in Sekunden, die zwischen den Wiederholungen gewartet wird.
+- backoff_factor: Faktor, mit dem die Wiederholungszeit vergrößert wird.
+
 ### Info von der 5Minds-Engine abrufen
 
 Um zwei verschiedene Engines gleichzeitig verwenden zu können, kann die Verwendung der Library mit `WITH NAME <ein Name>`
