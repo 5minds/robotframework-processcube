@@ -19,6 +19,6 @@ Start process model
     Log                      ${CORRELATION}
 
 Get the process instance
-    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}    delay=10    max_retries=2    backoff_factor=2
     Log                      ${RESULT}
     
