@@ -50,5 +50,5 @@ class ManualTaskKeyword:
         return manual_task
 
     @retry_on_exception
-    def finish_manual_task(self, manual_task_instance_id: str):
+    def finish_manual_task(self, manual_task_instance_id: str, **kwargs):
         self._client.manual_task_finish(manual_task_instance_id)

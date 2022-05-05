@@ -52,5 +52,5 @@ class EmptyTaskKeyword:
         return empty_task
 
     @retry_on_exception
-    def finish_empty_task(self, empty_task_instance_id: str):
+    def finish_empty_task(self, empty_task_instance_id: str, **kwargs):
         self._client.empty_task_finish(empty_task_instance_id)

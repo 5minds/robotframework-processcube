@@ -7,7 +7,7 @@ class EngineKeyword:
         self._client = client
 
     @retry_on_exception
-    def get_engine_info(self):
+    def get_engine_info(self, **kwargs):
         info = self._client.info()
 
         return info
