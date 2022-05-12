@@ -55,6 +55,6 @@ def retry_on_exception(func):
                 if current_retry > max_retries:
                     raise Exception(f"Calling {func.__name__} with max_retries {max_retries} without success.") from e
 
-                logger.info(f"[{func.__name__}] Retry count: {current_retry}; delay: {current_delay}")
+                logger.info(f"[{func.__name__}] Retry count: {current_retry} of {max_retries}; delay: {current_delay} and backoff_factor: {backoff_factor}")
 
     return retry_helper
