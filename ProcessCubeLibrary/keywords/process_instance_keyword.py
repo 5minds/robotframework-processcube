@@ -8,6 +8,7 @@ from atlas_engine_client.core.api import FlowNodeInstanceResponse
 
 from robot.api import logger
 
+from ._fields_helper import filter_kwargs_for_dataclass
 from ._retry_helper import retry_on_exception
 
 
@@ -53,19 +54,14 @@ class ProcessInstanceKeyword:
             'flow_node_type': 'bpmn:EndEvent',
         }
 
-        local_kwargs = kwargs.copy()
-        my_fields = fields(FlowNodeInstancesQuery)
-        field_names = [field.name for field in my_fields]
-        for key in kwargs:
-            if key not in field_names:
-                del local_kwargs[key] 
+        current_retry = 0
+        current_delay = float(kwargs.get('delay', self._delay))
+        backoff_factor = float(kwargs.get('backoff_factor', self._backoff_factor))
+        max_retries = int(kwargs.get('max_retries', self._max_retries))
+
+        local_kwargs = filter_kwargs_for_dataclass(FlowNodeInstancesQuery, kwargs)
 
         query_dict.update(**local_kwargs)
-
-        current_retry = 0
-        current_delay = self._delay
-        max_retries = self._max_retries
-        backoff_factor = self._backoff_factor
 
         while True:
 
