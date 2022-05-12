@@ -10,12 +10,15 @@ def retry_on_exception(func):
     @functools.wraps(func)
     def retry_helper(self, *args, **kwargs):
         current_retry = 0
-        current_delay = kwargs.get('delay', self._delay)
-        backoff_factor = kwargs.get('backoff_factor', self._backoff_factor)
-        max_retries = kwargs.get('max_retries', self._max_retries)
+
+        local_kwargs = kwargs.copy()
+
+        current_delay = local_kwargs.get('delay', self._delay)
+        backoff_factor = local_kwargs.get('backoff_factor', self._backoff_factor)
+        max_retries = local_kwargs.get('max_retries', self._max_retries)
 
         args_repr = [repr(a) for a in args]
-        kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]
+        kwargs_repr = [f"{k}={v!r}" for k, v in local_kwargs.items()]
     
         signature = ", ".join(args_repr + kwargs_repr)
     
@@ -27,18 +30,18 @@ def retry_on_exception(func):
         
 
         # delete the max_retries, delay and backoff_factor from the kwargs
-        if 'max_retries' in kwargs:
-            del kwargs['max_retries']
+        if 'max_retries' in local_kwargs:
+            del local_kwargs['max_retries']
 
-        if 'delay' in kwargs:
-            del kwargs['delay']
+        if 'delay' in local_kwargs:
+            del local_kwargs['delay']
 
-        if 'backoff_factor' in kwargs:
-            del kwargs['backoff_factor']
+        if 'backoff_factor' in local_kwargs:
+            del local_kwargs['backoff_factor']
 
         while True:
             try:
-                value = func(self, *args, **kwargs)
+                value = func(self, *args, **local_kwargs)
     
                 logger.debug(f"{func.__name__!r} returned {value!r}")
             

@@ -21,6 +21,30 @@ class ProcessInstanceKeyword:
 
     @retry_on_exception
     def get_processinstance(self, **kwargs) -> FlowNodeInstanceResponse:
+        return self._get_processinstance(**kwargs)
+
+    @retry_on_exception
+    def get_processinstance_result(self, **kwargs) -> Dict[str, Any]:
+        result = self._get_processinstance(**kwargs)
+
+        if result and len(result.tokens) > 0:
+            payload = result.tokens[0]['payload']
+            if payload is not None:
+                try:
+                    logger.info(f"type(payload) {type(payload)}")
+                    if type(payload) in [str, bytes]:
+                        payload = json.loads(payload)
+                    else:
+                        pass
+                except json.decoder.JSONDecodeError:
+                    payload = {}
+        else:
+            payload = {}
+
+
+        return payload
+
+    def _get_processinstance(self, **kwargs) -> FlowNodeInstanceResponse:
 
         query_dict = {
             'state': 'finished',
@@ -56,24 +80,3 @@ class ProcessInstanceKeyword:
                     f"Retry count: {current_retry}; delay: {current_delay}")
 
         return flow_node_instance
-
-    @retry_on_exception
-    def get_processinstance_result(self, **kwargs) -> Dict[str, Any]:
-        result = self.get_processinstance(**kwargs)
-
-        if result and len(result.tokens) > 0:
-            payload = result.tokens[0]['payload']
-            if payload is not None:
-                try:
-                    logger.info(f"type(payload) {type(payload)}")
-                    if type(payload) in [str, bytes]:
-                        payload = json.loads(payload)
-                    else:
-                        pass
-                except json.decoder.JSONDecodeError:
-                    payload = {}
-        else:
-            payload = {}
-
-
-        return payload

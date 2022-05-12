@@ -10,15 +10,17 @@ Library         Collections
 
 *** Tasks ***
 Successfully deploy
-    Deploy Processmodel    processes/hello_minimal.bpmn
+    #Deploy Processmodel    processes/hello_minimal.bpmn
+    Deploy Processmodel    processes/hello_delayed_result.bpmn
 
 Start process model
     &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
-    ${PROCESS_INSTANCE}=     Start Processmodel    hello_minimal    ${PAYLOAD}
+    #${PROCESS_INSTANCE}=     Start Processmodel    hello_minimal    ${PAYLOAD}
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_delayed_result    ${PAYLOAD}
     Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
     Log                      ${CORRELATION}
 
 Get the process instance
-    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}    delay=10    max_retries=2    backoff_factor=2
+    ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}  max_retries=10
     Log                      ${RESULT}
     
