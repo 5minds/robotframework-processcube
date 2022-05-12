@@ -31,13 +31,16 @@ def retry_on_exception(func):
 
         # delete the max_retries, delay and backoff_factor from the kwargs
         if 'max_retries' in local_kwargs:
-            del local_kwargs['max_retries']
+            #del local_kwargs['max_retries']
+            pass
 
         if 'delay' in local_kwargs:
-            del local_kwargs['delay']
+            #del local_kwargs['delay']
+            pass
 
         if 'backoff_factor' in local_kwargs:
-            del local_kwargs['backoff_factor']
+            #del local_kwargs['backoff_factor']
+            pass
 
         while True:
             try:

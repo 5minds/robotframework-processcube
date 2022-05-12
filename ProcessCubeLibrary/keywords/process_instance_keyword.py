@@ -1,6 +1,7 @@
 import json
 import time
 from typing import Dict, Any
+from dataclasses import fields
 
 from atlas_engine_client.core.api import FlowNodeInstancesQuery
 from atlas_engine_client.core.api import FlowNodeInstanceResponse
@@ -52,10 +53,19 @@ class ProcessInstanceKeyword:
             'flow_node_type': 'bpmn:EndEvent',
         }
 
-        query_dict.update(**kwargs)
+        local_kwargs = kwargs.copy()
+        my_fields = fields(FlowNodeInstancesQuery)
+        field_names = [field.name for field in my_fields]
+        for key in kwargs:
+            if key not in field_names:
+                del local_kwargs[key] 
+
+        query_dict.update(**local_kwargs)
 
         current_retry = 0
         current_delay = self._delay
+        max_retries = self._max_retries
+        backoff_factor = self._backoff_factor
 
         while True:
 
@@ -73,10 +83,9 @@ class ProcessInstanceKeyword:
             else:
                 time.sleep(current_delay)
                 current_retry = current_retry + 1
-                current_delay = current_delay * self._backoff_factor
-                if current_retry > self._max_retries:
+                current_delay = current_delay * backoff_factor
+                if current_retry > max_retries:
                     break
-                logger.info(
-                    f"Retry count: {current_retry}; delay: {current_delay}")
+                logger.info(f" Retry count: {current_retry} of {max_retries}; delay: {current_delay} and backoff_factor: {backoff_factor}")
 
         return flow_node_instance
