@@ -15,7 +15,7 @@ class DockerHandler:
     def __init__(self, **kwargs):
 
         params = {
-            'timeout': 120
+            'timeout': 240
         }
 
         self._client = docker.from_env(**params)
