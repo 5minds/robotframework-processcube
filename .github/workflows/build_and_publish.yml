@@ -46,7 +46,7 @@ jobs:
       MAJOR_VERSION: ${{ steps.prepare_version.outputs.MAJOR_VERSION }}
 
   build_and_publish:
-    runs-on: uuubuntu-latest
+    runs-on: ubuntu-latest
     #runs-on: [self-hosted, k8s.5minds.cloud]
     needs: get_version
 
@@ -97,7 +97,7 @@ jobs:
           twine upload dist/*
 
   build_docker:
-    runs-on: uuubuntu-latest
+    runs-on: ubuntu-latest
     #runs-on: [self-hosted, k8s.5minds.cloud]
     needs: [get_version, build_and_publish]
 
@@ -139,7 +139,7 @@ jobs:
           docker push 5minds/robotframework-processcube:$MAJOR_VERSION
 
   create_release:
-    runs-on: uuubuntu-latest
+    runs-on: ubuntu-latest
     #runs-on: [self-hosted, k8s.5minds.cloud]
     needs: [get_version, build_and_publish, build_docker]
 
