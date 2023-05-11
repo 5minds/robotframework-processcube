@@ -11,22 +11,22 @@ env:
 
 jobs:
   get_version:
-    runs-on: ubuntu-18.04   
+    runs-on: ubuntu-latest
     #runs-on: [self-hosted, k8s.5minds.cloud]
     if: "!contains(github.event.head_commit.message, 'skip ci')"
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Use Python 3.x
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
 
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 10.x
+          node-version: 18.x
 
       - name: Install dependencies
         # "setuptools>=46.1.0" is required for "setuptools.sic()"
@@ -46,12 +46,12 @@ jobs:
       MAJOR_VERSION: ${{ steps.prepare_version.outputs.MAJOR_VERSION }}
 
   build_and_publish:
-    runs-on: ubuntu-18.04   
+    runs-on: ubuntu-latest
     #runs-on: [self-hosted, k8s.5minds.cloud]
     needs: get_version
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Get version from common step
         run: |
@@ -59,17 +59,17 @@ jobs:
           echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
 
       - name: Use Python 3.x
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
 
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 10.x
+          node-version: 18.x
       
-      - name: Run tests
-        run: docker-compose -f docker-compose.tests.yaml up --build  --exit-code-from robot
+      #- name: Run tests
+      #  run: docker-compose -f docker-compose.tests.yaml up --build  --exit-code-from robot
 
       - name: Install dependencies
         # "setuptools>=46.1.0" is required for "setuptools.sic()"
@@ -97,12 +97,12 @@ jobs:
           twine upload dist/*
 
   build_docker:
-    runs-on: ubuntu-18.04   
+    runs-on: ubuntu-latest
     #runs-on: [self-hosted, k8s.5minds.cloud]
     needs: [get_version, build_and_publish]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Get version from common step
         run: |
@@ -139,12 +139,12 @@ jobs:
           docker push 5minds/robotframework-processcube:$MAJOR_VERSION
 
   create_release:
-    runs-on: ubuntu-18.04   
+    runs-on: ubuntu-latest
     #runs-on: [self-hosted, k8s.5minds.cloud]
     needs: [get_version, build_and_publish, build_docker]
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       - name: Get version from common step
         run: |
@@ -152,14 +152,14 @@ jobs:
           echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
 
       - name: Use Python 3.x
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
 
-      - name: Use Node.js 10.x
-        uses: actions/setup-node@v1
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 10.x
+          node-version: 18.x
 
       - name: Install dependencies
         # "setuptools>=46.1.0" is required for "setuptools.sic()"

@@ -34,7 +34,7 @@ class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
         self._backoff_factor = int(kwargs.get('backoff_factor', 2))
         self._delay = float(kwargs.get('delay', 0.1))
         self._worker_id = kwargs.get('worker_id', "robot_framework")
-        readyness_retries = int(kwargs.get('readyness_retry', 5))
+        readyness_retries = int(kwargs.get('readyness_retry', 20))
 
         self._client = self._create_client(**kwargs)
         self._kwargs = kwargs
