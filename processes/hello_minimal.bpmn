@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definition_ff4cbbb8-c2c9-4368-9173-3997694d0940" targetNamespace="http://bpmn.io/schema/bpmn" exporter="5Minds Studio" exporterVersion="1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definition_ff4cbbb8-c2c9-4368-9173-3997694d0940" targetNamespace="http://bpmn.io/schema/bpmn" exporter="5Minds Studio" exporterVersion="1">
   <bpmn:collaboration id="Collaboration_1cidyxu" name="">
     <bpmn:participant id="Participant_0px403d" name="hello minimal" processRef="hello_minimal" />
   </bpmn:collaboration>
@@ -8,15 +8,26 @@
       <bpmn:lane id="Lane_1xzf0d3" name="Lane">
         <bpmn:flowNodeRef>start</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>end</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0t2wfjw</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="start" name="Start">
       <bpmn:outgoing>Flow_0ax8oix</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0ax8oix" sourceRef="start" targetRef="end" />
+    <bpmn:sequenceFlow id="Flow_0ax8oix" sourceRef="start" targetRef="Activity_0t2wfjw" />
     <bpmn:endEvent id="end">
-      <bpmn:incoming>Flow_0ax8oix</bpmn:incoming>
+      <bpmn:incoming>Flow_0a3rl2a</bpmn:incoming>
     </bpmn:endEvent>
+    <bpmn:task id="Activity_0t2wfjw">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="enabled" value="false" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ax8oix</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a3rl2a</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0a3rl2a" sourceRef="Activity_0t2wfjw" targetRef="end" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1cidyxu">
@@ -26,10 +37,6 @@
       <bpmndi:BPMNShape id="Lane_1xzf0d3_di" bpmnElement="Lane_1xzf0d3" isHorizontal="true">
         <dc:Bounds x="35" y="4" width="405" height="336" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0ax8oix_di" bpmnElement="Flow_0ax8oix">
-        <di:waypoint x="128" y="170" />
-        <di:waypoint x="332" y="170" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="start">
         <dc:Bounds x="92" y="152" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -39,6 +46,17 @@
       <bpmndi:BPMNShape id="Event_1ntbd2i_di" bpmnElement="end">
         <dc:Bounds x="332" y="152" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0t2wfjw_di" bpmnElement="Activity_0t2wfjw">
+        <dc:Bounds x="170" y="130" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ax8oix_di" bpmnElement="Flow_0ax8oix">
+        <di:waypoint x="128" y="170" />
+        <di:waypoint x="170" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a3rl2a_di" bpmnElement="Flow_0a3rl2a">
+        <di:waypoint x="270" y="170" />
+        <di:waypoint x="332" y="170" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

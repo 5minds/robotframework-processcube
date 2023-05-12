@@ -11,7 +11,8 @@ Library         DateTime
 
 *** Tasks ***
 Successfully deploy
-    Deploy Processmodel    processes/hello_minimal.bpmn
+    #Deploy Processmodel    processes/hello_minimal.bpmn
+    Deploy Processmodel    processes/hello_check_processinstance.bpmn
 
 Start process model
     ${date} =	Get Current Date
@@ -20,7 +21,7 @@ Start process model
 
     &{PAYLOAD}=              Create Dictionary     foo=bar    hello=world
 
-    ${PROCESS_INSTANCE}=     Start Processmodel    hello_minimal    ${PAYLOAD}    correlation_id=${CORRELATION}
+    ${PROCESS_INSTANCE}=     Start Processmodel    hello_check_processinstance    ${PAYLOAD}    correlation_id=${CORRELATION}
     
     Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
     Log                      ${CORRELATION}
@@ -35,7 +36,7 @@ Get the process instance by correlation
     
 
 Get the process instance by process modell
-    ${RESULT}                Get Active Processinstances By Processmodel          hello_minimal
+    ${RESULT}                Get Active Processinstances By Processmodel          hello_check_processinstance
 
     Log                      ${RESULT}
 
