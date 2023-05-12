@@ -33,9 +33,29 @@ class ProcessInstanceKeyword:
 
         return result
 
+    def get_processinstances_by_correlation(self, correlation) -> FlowNodeInstanceResponse:
+        query_dict = {
+            'correlation_id': correlation
+        }
+
+        logger.info(f"query_dict: {query_dict}")
+
+        result = self.get_processinstances_by_query(**query_dict)
+
+        return result
+
     def get_active_processinstances_by_processmodel(self, process_model) -> FlowNodeInstanceResponse:
         query_dict = {
             'state': 'running',
+            'process_model_id': process_model
+        }
+
+        result = self.get_processinstances_by_query(**query_dict)
+
+        return result
+
+    def get_processinstances_by_processmodel(self, process_model) -> FlowNodeInstanceResponse:
+        query_dict = {
             'process_model_id': process_model
         }
 
