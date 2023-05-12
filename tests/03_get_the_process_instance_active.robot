@@ -35,7 +35,7 @@ Get the process instance by correlation
     Log    ${cnt}
     
 
-Get the process instance by process modell
+Get the process instance by process model
     ${RESULT}                Get Active Processinstances By Processmodel          hello_check_processinstance
 
     Log                      ${RESULT}

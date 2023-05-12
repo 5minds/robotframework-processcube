@@ -26,7 +26,7 @@ Start process model
     Log                      ${CORRELATION}
 
 Get the process instance by correlation
-    ${RESULT}                Get Active Processinstances By Correlation            ${CORRELATION}
+    ${RESULT}                Get Processinstances By Correlation            ${CORRELATION}
 
     Log                      ${RESULT}
 
@@ -34,8 +34,8 @@ Get the process instance by correlation
     Log    ${cnt}
     
 
-Get the process instance by process modell
-    ${RESULT}                Get Active Processinstances By Processmodel          hello_minimal
+Get the process instance by process model
+    ${RESULT}                Get Processinstances By Processmodel          hello_minimal
 
     Log                      ${RESULT}
 
