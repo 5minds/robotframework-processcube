@@ -1,7 +1,6 @@
 import time
-from urllib3.exceptions import NewConnectionError
 
-from atlas_engine_client.core.api import Client
+from processcube_client.core.api import Client
 
 from .keywords import DeployKeyword
 from .keywords import EmptyTaskKeyword

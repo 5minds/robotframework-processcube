@@ -1,6 +1,6 @@
 import time
 
-from atlas_engine_client.core.api import EmptyTaskQuery
+from processcube_client.core.api import EmptyTaskQuery
 
 from robot.api import logger
 

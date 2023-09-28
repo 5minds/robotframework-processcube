@@ -3,8 +3,8 @@ import time
 from typing import Dict, Any
 from dataclasses import fields
 
-from atlas_engine_client.core.api import FlowNodeInstancesQuery
-from atlas_engine_client.core.api import FlowNodeInstanceResponse
+from processcube_client.core.api import FlowNodeInstancesQuery
+from processcube_client.core.api import FlowNodeInstanceResponse
 
 from robot.api import logger
 
