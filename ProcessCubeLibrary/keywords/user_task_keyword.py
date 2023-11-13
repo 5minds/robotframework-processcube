@@ -1,7 +1,7 @@
 import time
 from typing import Dict, Any
 
-from atlas_engine_client.core.api import UserTaskQuery
+from processcube_client.core.api import UserTaskQuery
 
 from robot.api import logger
 

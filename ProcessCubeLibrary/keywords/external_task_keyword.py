@@ -2,8 +2,8 @@
 import time
 from typing import Dict, Any
 
-from atlas_engine_client.core.api import FetchAndLockRequestPayload
-from atlas_engine_client.core.api import FinishExternalTaskRequestPayload
+from processcube_client.core.api import FetchAndLockRequestPayload
+from processcube_client.core.api import FinishExternalTaskRequestPayload
 
 from robot.api import logger
 

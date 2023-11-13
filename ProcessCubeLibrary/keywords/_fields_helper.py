@@ -1,5 +1,4 @@
 from dataclasses import fields
-from threading import local
 
 def filter_kwargs_for_dataclass(dataclassType, kwargs: dict) -> dict:
     local_kwargs = kwargs.copy()

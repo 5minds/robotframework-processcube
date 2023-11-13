@@ -1,6 +1,6 @@
 
-from atlas_engine_client.core.api import ProcessStartRequest
-from atlas_engine_client.core.api import StartCallbackType
+from processcube_client.core.api import ProcessStartRequest
+from processcube_client.core.api import StartCallbackType
 
 from ._retry_helper import retry_on_exception
 

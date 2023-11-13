@@ -1,6 +1,6 @@
 import time
 
-from atlas_engine_client.core.api import ManualTaskQuery
+from processcube_client.core.api import ManualTaskQuery
 
 from robot.api import logger
 
