@@ -19,8 +19,10 @@ Start process model
     ${PROCESS_INSTANCE}=     Start Processmodel    hello_delayed_result    ${PAYLOAD}
     Set Suite Variable       ${CORRELATION}        ${PROCESS_INSTANCE.correlation_id}
     Log                      ${CORRELATION}
+    Log To Console           ${CORRELATION}
 
 Get the process instance
+    Sleep    2s    # Wartet 2 Sekunden
     ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}  max_retries=10    delay=1    backoff_factor=1
     Log                      ${RESULT}
     # ${RESULT} = {'foo': 'bar', 'hello': 'world'}
