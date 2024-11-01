@@ -10,7 +10,7 @@ def str2bool(v):
 
 class DockerHandler:
 
-    IMAGE_NAME = '5minds/engine'
+    IMAGE_NAME = '5minds/processcube_engine'
 
     def __init__(self, **kwargs):
 
