@@ -23,10 +23,10 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 22.x
 
       - name: Install dependencies
         # "setuptools>=46.1.0" is required for "setuptools.sic()"
@@ -63,10 +63,10 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 22.x
       
       #- name: Run tests
       #  run: docker-compose -f docker-compose.tests.yaml up --build  --exit-code-from robot
@@ -156,10 +156,10 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 22.x
 
       - name: Install dependencies
         # "setuptools>=46.1.0" is required for "setuptools.sic()"
