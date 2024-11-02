@@ -21,8 +21,9 @@ Start process model
     Log                      ${CORRELATION}
 
 Get the process instance
+    Sleep    2s    # Wartet 2 Sekunden
     ${RESULT}                Get Processinstance Result            correlation_id=${CORRELATION}  max_retries=10    delay=1    backoff_factor=1
     Log                      ${RESULT}
-    # ${RESULT} = {'foo': 'bar', 'hello': 'world'}
-    #Should Be Equal          ${RESULT}    foo=bar  hello=world
+    &{EQ_RESULT}=              Create Dictionary     foo=bar    hello=world
+    Should Be Equal          ${RESULT}    ${EQ_RESULT}
     

@@ -77,17 +77,8 @@ class ProcessInstanceKeyword:
     def get_processinstance_result(self, **kwargs) -> Dict[str, Any]:
         result = self._get_processinstance(**kwargs)
 
-        if result and len(result.tokens) > 0:
-            payload = result.tokens[0]['payload']
-            if payload is not None:
-                try:
-                    logger.info(f"type(payload) {type(payload)}")
-                    if type(payload) in [str, bytes]:
-                        payload = json.loads(payload)
-                    else:
-                        pass
-                except json.decoder.JSONDecodeError:
-                    payload = {}
+        if result:
+            payload = result.end_token
         else:
             payload = {}
 
