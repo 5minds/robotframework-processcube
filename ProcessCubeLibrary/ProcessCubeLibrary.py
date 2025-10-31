@@ -3,7 +3,6 @@ import time
 from processcube_client.core.api import Client
 
 from .keywords import DeployKeyword
-from .keywords import EmptyTaskKeyword
 from .keywords import EngineKeyword
 from .keywords import ExternalTaskKeyword
 from .keywords import ManualTaskKeyword
@@ -17,7 +16,7 @@ from robot.api import logger
 from .docker_handler import DockerHandler
 
 
-class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword, 
+class ProcessCubeLibrary(DeployKeyword, 
     EngineKeyword, ExternalTaskKeyword, ManualTaskKeyword, 
     ProcessInstanceKeyword, SendKeyword, StartKeyword, 
     UserTaskKeyword):
