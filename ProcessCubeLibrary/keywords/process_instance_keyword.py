@@ -65,7 +65,7 @@ class ProcessInstanceKeyword:
 
     @retry_on_exception
     def get_processinstances_by_query(self, **query_dict) -> FlowNodeInstanceResponse:
-        result = self._client.process_instanceq_query(FlowNodeInstancesQuery(**query_dict))
+        result = self._client.process_instance_query(FlowNodeInstancesQuery(**query_dict))
 
         return result
 
@@ -106,7 +106,7 @@ class ProcessInstanceKeyword:
 
             query = FlowNodeInstancesQuery(**query_dict)
 
-            flow_node_instances = self._client.flow_node_instance_get(query)
+            flow_node_instances = self._client.flow_node_instance_query(query)
 
             if len(flow_node_instances) == 1:
                 flow_node_instance = flow_node_instances[0]

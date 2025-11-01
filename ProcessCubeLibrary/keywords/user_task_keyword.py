@@ -35,7 +35,7 @@ class UserTaskKeyword:
         logger.info(query)
 
         while True:
-            user_tasks = self._client.user_task_get(query)
+            user_tasks = self._client.user_task_query(query)
 
             logger.info(user_tasks)
 

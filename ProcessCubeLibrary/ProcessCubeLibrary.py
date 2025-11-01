@@ -17,7 +17,7 @@ from robot.api import logger
 from .docker_handler import DockerHandler
 
 
-class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword, 
+class ProcessCubeLibrary(DeployKeyword, EmptyTaskKeyword,
     EngineKeyword, ExternalTaskKeyword, ManualTaskKeyword, 
     ProcessInstanceKeyword, SendKeyword, StartKeyword, 
     UserTaskKeyword):

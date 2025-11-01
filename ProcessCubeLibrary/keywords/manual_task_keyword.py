@@ -29,7 +29,7 @@ class ManualTaskKeyword:
         max_retries = int(kwargs.get('max_retries', self._max_retries))
 
         while True:
-            manual_tasks = self._client.manual_task_get(query)
+            manual_tasks = self._client.manual_task_query(query)
 
             logger.info(manual_tasks)
 
