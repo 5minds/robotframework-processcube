@@ -28,7 +28,7 @@ class SendKeyword:
             payload=payload
         )
 
-        self._client.events_trigger_message(message_name, request)
+        self._client.trigger_message(message_name, request)
 
     @retry_on_exception
     def send_signal(self, signal_name, **options):
@@ -40,4 +40,4 @@ class SendKeyword:
                 f"Send signal {signal_name} with {delay} seconds delay.")
             time.sleep(float(delay))
 
-        self._client.events_trigger_signal(signal_name)
+        self._client.trigger_signal(signal_name)

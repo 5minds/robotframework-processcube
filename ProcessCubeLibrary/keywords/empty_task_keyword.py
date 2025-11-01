@@ -1,15 +1,13 @@
 import time
-from typing import Dict, Any
 
-from processcube_client.core.api import UserTaskQuery
+from processcube_client.core.api import EmptyTaskQuery
 
 from robot.api import logger
 
-from ._fields_helper import filter_kwargs_for_dataclass
 from ._retry_helper import retry_on_exception
 
 
-class UserTaskKeyword:
+class EmptyTaskKeyword:
 
     def __init__(self, client, **kwargs):
         self._client = client
@@ -19,32 +17,30 @@ class UserTaskKeyword:
         self._delay = kwargs.get('delay', 0.1)
 
     @retry_on_exception
-    def get_user_task_by(self, **kwargs):
+    def get_empty_task_by(self, **kwargs):
 
         logger.debug(kwargs)
+
+        query = EmptyTaskQuery(**kwargs)
+
+        logger.info(query)
 
         current_retry = 0
         current_delay = float(kwargs.get('delay', self._delay))
         backoff_factor = float(kwargs.get('backoff_factor', self._backoff_factor))
         max_retries = int(kwargs.get('max_retries', self._max_retries))
 
-        local_kwargs = filter_kwargs_for_dataclass(UserTaskQuery, kwargs)
-
-        query = UserTaskQuery(**local_kwargs)
-
-        logger.info(query)
-
         while True:
-            user_tasks = self._client.user_task_query(query)
+            empty_tasks = self._client.empty_task_query(query)
 
-            logger.info(user_tasks)
+            logger.info(empty_tasks)
 
-            if len(user_tasks) >= 1:
-                user_task = user_tasks[0]
+            if len(empty_tasks) >= 1:
+                empty_task = empty_tasks[0]
             else:
-                user_task = {}
+                empty_task = {}
 
-            if user_task:
+            if empty_task:
                 break
             else:
                 time.sleep(current_delay)
@@ -52,10 +48,10 @@ class UserTaskKeyword:
                 current_delay = current_delay * backoff_factor
                 if current_retry > max_retries:
                     break
-                logger.info(f" Retry count: {current_retry} of {max_retries}; delay: {current_delay} and backoff_factor: {backoff_factor}")
+                logger.info(f" Retry count: {current_retry} of {max_retries}; delay: {current_delay} and backoff_factor: {backoff_factor}")
 
-        return user_task
+        return empty_task
 
     @retry_on_exception
-    def finish_user_task(self, user_task_instance_id: str, payload: Dict[str, Any], **kwargs):
-        self._client.user_task_finish(user_task_instance_id, payload)
+    def finish_empty_task(self, empty_activity_instance_id: str, **kwargs):
+        self._client.empty_task_finish(empty_activity_instance_id)
