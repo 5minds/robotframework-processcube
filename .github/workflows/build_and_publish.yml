@@ -6,88 +6,163 @@ on:
       - master
       - beta
       - develop
+      - feature/*
+
 env:
   CI_TOOLS_VERSION: "3.3.4"
 
 jobs:
-  get_version:
+  delete_artifacts:
+    name: Delete old artifacts
     runs-on: ubuntu-latest
-    #runs-on: [self-hosted, k8s.5minds.cloud]
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Delete old artifacts
+        uses: c-hive/gha-remove-artifacts@v1
+        with:
+          age: '7 days'
+          skip-recent: 5
+        continue-on-error: true
+
+  prepare_version:
+    name: Prepare version
+    runs-on: ubuntu-latest
+    if: "!(contains(github.actor, 'process-engine-ci') || contains(github.actor, 'admin'))"
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Use Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: "3.11"
 
       - name: Use Node.js 22.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: "22"
 
       - name: Install dependencies
-        # "setuptools>=46.1.0" is required for "setuptools.sic()"
         run: |
           pip install --upgrade "setuptools>=46.1.0"
           npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
 
-      - name: Prepare version infos
-        id: prepare_version
+      - name: Prepare version
         run: |
           ci_tools prepare-version --allow-dirty-workdir --mode python
-          echo "::set-output name=VERSION::$(ci_tools get-version --mode python)"
-          echo "::set-output name=MAJOR_VERSION::$(ci_tools get-version --major --mode python)"
 
-    outputs:
-      VERSION: ${{ steps.prepare_version.outputs.VERSION }}
-      MAJOR_VERSION: ${{ steps.prepare_version.outputs.MAJOR_VERSION }}
+      - name: Upload setup.py
+        uses: actions/upload-artifact@v4
+        with:
+          name: setup_py
+          path: setup.py
 
-  build_and_publish:
+  lint:
     runs-on: ubuntu-latest
-    #runs-on: [self-hosted, k8s.5minds.cloud]
-    needs: get_version
-
+    if: "!(contains(github.actor, 'process-engine-ci') || contains(github.actor, 'admin'))"
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Get version from common step
-        run: |
-          echo "VERSION=${{ needs.get_version.outputs.VERSION }}" >> $GITHUB_ENV
-          echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
 
       - name: Use Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11
-
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22.x
-      
-      #- name: Run tests
-      #  run: docker-compose -f docker-compose.tests.yaml up --build  --exit-code-from robot
+          python-version: "3.11"
 
       - name: Install dependencies
-        # "setuptools>=46.1.0" is required for "setuptools.sic()"
+        run: |
+          pip install flake8
+
+      - run: |
+          echo "Linting errors won't result in a failed build at the moment. This might change once proper linting rules were defined."
+          flake8 ProcessCubeLibrary || true
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [prepare_version, lint]
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
         run: |
           pip install --upgrade "setuptools>=46.1.0"
           pip install wheel
+
+      - name: Download setup.py
+        uses: actions/download-artifact@v4
+        with:
+          name: setup_py
+          path: "."
+
+      - name: Build
+        run: |
+          python setup.py sdist bdist_wheel
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: robotframework_processcube
+          path: dist/*
+
+  commit_and_tag_version:
+    name: "Commit & tag version"
+    runs-on: ubuntu-latest
+    needs: [prepare_version, lint]
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade "setuptools>=46.1.0"
           npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
 
-      - name: Set version
-        run: |
-          ci_tools set-version --version ${{ env.VERSION }} --mode python
+      - name: Download setup.py
+        uses: actions/download-artifact@v4
+        with:
+          name: setup_py
+          path: "."
 
-      - name: build
-        run: python setup.py sdist bdist_wheel
+      - name: Commit and tag
+        run: |
+          ci_tools commit-and-tag-version --only-on-primary-branches --mode python
+        env:
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+  publish_pypi:
+    name: Publish on PyPi
+    runs-on: ubuntu-latest
+    needs: [build, commit_and_tag_version]
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+    steps:
+      - name: Use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
           pip install twine
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: robotframework_processcube
+          path: dist
 
       - name: Publish on PyPi
         env:
@@ -96,25 +171,91 @@ jobs:
         run: |
           twine upload dist/*
 
+  publish_github:
+    name: Publish on GitHub
+    runs-on: ubuntu-latest
+    needs: [build, commit_and_tag_version]
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade "setuptools>=46.1.0"
+          npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: robotframework_processcube
+          path: dist
+
+      - name: Download setup.py
+        uses: actions/download-artifact@v4
+        with:
+          name: setup_py
+          path: "."
+
+      - name: Upload to GitHub
+        run: |
+          ci_tools update-github-release --mode python --only-on-primary-branches --use-title-and-text-from-git-tag
+          ci_tools update-github-release --mode python --assets "dist/robotframework_processcube-*.tar.gz"
+        env:
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
   build_docker:
     runs-on: ubuntu-latest
-    #runs-on: [self-hosted, k8s.5minds.cloud]
-    needs: [get_version, build_and_publish]
-
+    needs: [build, commit_and_tag_version, publish_pypi]
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta' || github.ref == 'refs/heads/develop'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Get version from common step
+      - name: Download setup.py
+        uses: actions/download-artifact@v4
+        with:
+          name: setup_py
+          path: "."
+
+      - name: Use Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
         run: |
-          echo "VERSION=${{ needs.get_version.outputs.VERSION }}" >> $GITHUB_ENV
-          echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
+          pip install --upgrade "setuptools>=46.1.0"
+          npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
 
-      - name: Build Docker Image for backend
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(ci_tools get-version --mode python)
+          MAJOR_VERSION=$(ci_tools get-version --major --mode python)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
+
+      - name: Build Docker Image
         run: |
           docker build \
             --tag 5minds/robotframework-processcube:$VERSION --build-arg PROCESS_CUBE_LIBRARY_VERSION=$VERSION  .
 
-      - name: Tag master Release Docker Image for backend
+      - name: Tag master Release Docker Image
         if: github.ref == 'refs/heads/master'
         run: |
           docker tag 5minds/robotframework-processcube:$VERSION 5minds/robotframework-processcube:latest
@@ -137,44 +278,3 @@ jobs:
         run: |
           docker push 5minds/robotframework-processcube:latest
           docker push 5minds/robotframework-processcube:$MAJOR_VERSION
-
-  create_release:
-    runs-on: ubuntu-latest
-    #runs-on: [self-hosted, k8s.5minds.cloud]
-    needs: [get_version, build_and_publish, build_docker]
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Get version from common step
-        run: |
-          echo "VERSION=${{ needs.get_version.outputs.VERSION }}" >> $GITHUB_ENV
-          echo "MAJOR_VERSION=${{ needs.get_version.outputs.MAJOR_VERSION }}" >> $GITHUB_ENV
-
-      - name: Use Python 3.11
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
-
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22.x
-
-      - name: Install dependencies
-        # "setuptools>=46.1.0" is required for "setuptools.sic()"
-        run: |
-          pip install --upgrade "setuptools>=46.1.0"
-          npm install -g @process-engine/ci_tools@${{ env.CI_TOOLS_VERSION }}
-
-      - name: Set version
-        run: |
-          ci_tools set-version --version ${{ env.VERSION }} --mode python
-
-      - name: Commit & tag version
-        env:
-          GH_USER: ${{ secrets.GH_CI_USER_NAME }}
-          GH_TOKEN: ${{ secrets.GH_CI_USER_TOKEN }}
-        run: |
-          ci_tools commit-and-tag-version --only-on-primary-branches --mode python
-          ci_tools update-github-release --mode python --only-on-primary-branches --use-title-and-text-from-git-tag
