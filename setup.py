@@ -17,7 +17,11 @@ name = "5Minds IT-Solutions GmbH & Co. KG"
 
 setuptools.setup(
     name="robotframework-processcube",
+<<<<<<< HEAD
     version=setuptools.sic('6.0.5-alpha.2'),
+=======
+    version=setuptools.sic('6.0.4-alpha.1'),
+>>>>>>> 348f482f02c148a183775439ec6b491ac566c8c0
     description="Robot Framework Keywords for processcube workflow engine.",
     long_description=long_description,
     long_description_content_type="text/markdown",
