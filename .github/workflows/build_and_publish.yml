@@ -57,7 +57,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    if: "!(contains(github.actor, 'process-engine-ci') || contains(github.actor, 'admin'))"
+    if: "!(contains(github.GH_USER, 'process-engine-ci') || contains(github.GH_USER, 'admin'))"
     steps:
       - uses: actions/checkout@v4
 
