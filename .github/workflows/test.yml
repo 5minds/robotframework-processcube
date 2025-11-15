@@ -1,0 +1,60 @@
+name: Test Robot Framework
+
+on:
+  push:
+    branches:
+      - master
+      - beta
+      - develop
+      - feature/*
+  pull_request:
+    branches:
+      - master
+      - beta
+      - develop
+
+jobs:
+  test:
+    name: Test Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.12', '3.13', '3.14-dev']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GH_USER }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+
+      - name: Pull Docker image
+        run: |
+          docker pull ghcr.io/5minds/processcube_engine:latest || true
+
+      - name: Run Robot Framework tests
+        run: |
+          python -m robot tests/
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-results-py${{ matrix.python-version }}
+          path: |
+            output.xml
+            log.html
+            report.html
